@@ -880,8 +880,8 @@
       "notes": "Clean single-turn zero-tool DeepSeek API replication (1 Asterix 65k cap call resampled at 131,072 max_tokens)."
     },
     {
-      "id": "glm_5_5_dang",
-      "model_name": "GLM-5.5",
+      "id": "glm_5_2_dang",
+      "model_name": "GLM-5.2",
       "source": "Xingyu Dang",
       "source_url": "https://x.com/xingyudang/status/2117428789068386630",
       "tier": "reported_wwi_only",

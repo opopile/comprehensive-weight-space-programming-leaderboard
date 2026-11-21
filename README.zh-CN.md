@@ -46,7 +46,7 @@
 | 24 | Muse Wonder | weight-space-bench | 8.2625 | computed_wwi | 7.4040 | 0.6440 | 1.8990 | high | OpenRouter | 3/game |
 | 25 | DeepSeek V4-Pro | yzw-22 | 7.6170 | computed_wwi | 7.0000 | 0.6000 | 1.4000 | max | DeepSeek API | 3/game |
 | 26 | Claude Fable 5.2 | Shawn Hu (shawnghu) | 6.6223 | computed_wwi | 0.5500 | 22.1040 | 0.4843 | xhigh | Anthropic API (128k cap) | 3/game |
-| 27 | GLM-5.5 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 27 | GLM-5.2 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
 | 28 | Claude Opus 4.5 | Alan Turing Institute | 3.6281 | computed_wwi | 3.4000 | 0.1000 | 0.8000 | Unspecified (per source) | Claude / Anthropic | 3-5/game |
 | 29 | Mistral Large 4 | Xingyu Dang | 2.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
 | 30 | DeepSeek V4.1 Flash | weight-space-bench | 1.0636 | computed_wwi | 0.7300 | 0.1730 | 1.8220 | high | OpenRouter | 3/game |
@@ -101,7 +101,7 @@
 | Kimi K3.1 Pro | Xingyu Dang | 29.8000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Qwen3.8 2.4T A95B | Xingyu Dang | 12.5000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | DeepSeek V4.1 Flash 1017 | Xingyu Dang | 10.0000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
-| GLM-5.5 | Xingyu Dang | 6.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
+| GLM-5.2 | Xingyu Dang | 6.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Mistral Large 4 | Xingyu Dang | 2.6000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | MiniMax M3.1 Flash | Xingyu Dang | 0.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Step 5 Preview | Xingyu Dang | 0.1000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
@@ -180,7 +180,7 @@
 3. **仅含 Breakout 的复现仓库**：缺失 Seaquest 与 Asterix 评测——`niqbal/fable-weight-space-breakout`（`Claude Fable 5.1`：首次 `501.6 ± 5.8`，`2/3` 次触发 `128k` 截断得 `0`，3 次均值 `167.2`）、`jasperzhao05/wsplore`（`GPT-6.1 Sol` 均值 `487.0`，三次为 `480, 603, 378`；`GPT-6 Luna` 均值 `3.0`，三次为 `6, 0, 3`）以及 `mraad/weight-space-programming`（`Claude` 未明型号：`269.4 ± 7.4`）。
 4. **Alan Turing Institute（`arXiv:2611.21449`）部分结果与纯区间描述模型**：`GPT-5.2`（Breakout `3.5`，Seaquest/Asterix 因 API 失败缺失）、`Kimi-K3.1-Pro`（`19–68 / 1–2 / 9–42`）、`DeepSeek-V4-Pro`（`2–12 / ~0 / ~0`）以及 `Qwen3.8-27B`（三游戏均值均 `<5`，96 次 Breakout 中最高 `41`）。
 5. **`Mid-NIGHTSHARK/weight-space-programming`**：仅含 Breakout、采用非标准 3,000 回合自定义种子调度，且本地记录标签标注为未鉴权（`Gemini Argon 4 Medium` `60.322 ± 1.195`、`Claude Sonnet 5.5` `10.587 ± 0.206`、`GPT-6 Original` `2.516 ± 0.036`、`GPT-6 Luna Extra High` `1.230 ± 0.023`、`DeepSeek Original` `0.493 ± 0.009`）。
-6. **`akhaliq/writing-weights-index` OCR 数据卫生警示**：其 `results.jsonl` 为 `0` 字节，且 `app.py` 的 `REFERENCE` 列表存在严重的截图 OCR 识别错误（例如将 `GPT-6 Astra` 错识为 `GPT-5 Astra`、`Gemini 4 Carbon` 错识为 `Gemini 3 Gildron`、`Claude Opus 5.5` 错识为 `Claude Opus 5.9`、`Gemini 4 Argon 36.6` 错识为 `Gemini 3 Alpin 36.0`、`Qwen3.8 2.4T A95B` 错识为 `Qwen3 235B A35B`、`Mistral Large 4 2.6` 错识为 `MiniMax Large 2.6`、`MiniMax M3.1 Flash 0.2` 错识为 `MedsMax MD1 Flash 0.2`、`Step 5 Preview 0.1` 错识为 `Step-3 Preview 0.1`）。本仓库**未**将其作为数据源。
+6. **`akhaliq/writing-weights-index` OCR 数据卫生警示**：其 `results.jsonl` 为 `0` 字节，且 `app.py` 的 `REFERENCE` 列表存在严重的截图 OCR 识别错误（例如将 `GPT-6 Astra` 错识为 `GPT-5 Astra`、`Gemini 4 Carbon` 错识为 `Gemini 3 Gildron`、`Claude Opus 5.5` 错识为 `Claude Opus 5.9`、`Gemini 4 Argon 36.6` 错识为 `Gemini 3 Alpin 36.0`、`Qwen3.8 2.4T A95B` 错识为 `Qwen3 235B A35B`、`Mistral Large 4 2.6` 错识为 `MiniMax Large 2.6`、`MiniMax M3.1 Flash 0.2` 错识为 `MedsMax MD1 Flash 0.2`、`GLM-5.2` 错识为 `GLM-5.5`、`Step 5 Preview 0.1` 错识为 `Step-3 Preview 0.1`）。本仓库**未**将其作为数据源。
 
 ---
 

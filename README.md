@@ -46,7 +46,7 @@ A unified, reproducible consolidation of **`41`** publicly reported **Weight-Spa
 | 24 | Muse Wonder | weight-space-bench | 8.2625 | computed_wwi | 7.4040 | 0.6440 | 1.8990 | high | OpenRouter | 3/game |
 | 25 | DeepSeek V4-Pro | yzw-22 | 7.6170 | computed_wwi | 7.0000 | 0.6000 | 1.4000 | max | DeepSeek API | 3/game |
 | 26 | Claude Fable 5.2 | Shawn Hu (shawnghu) | 6.6223 | computed_wwi | 0.5500 | 22.1040 | 0.4843 | xhigh | Anthropic API (128k cap) | 3/game |
-| 27 | GLM-5.5 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 27 | GLM-5.2 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
 | 28 | Claude Opus 4.5 | Alan Turing Institute | 3.6281 | computed_wwi | 3.4000 | 0.1000 | 0.8000 | Unspecified (per source) | Claude / Anthropic | 3-5/game |
 | 29 | Mistral Large 4 | Xingyu Dang | 2.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
 | 30 | DeepSeek V4.1 Flash | weight-space-bench | 1.0636 | computed_wwi | 0.7300 | 0.1730 | 1.8220 | high | OpenRouter | 3/game |
@@ -101,7 +101,7 @@ The following 10 models appear in Xingyu Dang's Writing Weights Index (`reported
 | Kimi K3.1 Pro | Xingyu Dang | 29.8000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Qwen3.8 2.4T A95B | Xingyu Dang | 12.5000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | DeepSeek V4.1 Flash 1017 | Xingyu Dang | 10.0000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
-| GLM-5.5 | Xingyu Dang | 6.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
+| GLM-5.2 | Xingyu Dang | 6.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Mistral Large 4 | Xingyu Dang | 2.6000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | MiniMax M3.1 Flash | Xingyu Dang | 0.2000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
 | Step 5 Preview | Xingyu Dang | 0.1000 | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) |
@@ -180,7 +180,7 @@ All clean leaderboard entries target the identical **MIT CSAIL Experiment 5** ze
 3. **Breakout-Only Replications**: Missing Seaquest and Asterix evaluations—`niqbal/fable-weight-space-breakout` (`Claude Fable 5.1`: `501.6 ± 5.8` run 1, `2/3` hit `128k` cap = `0`, 3-run mean `167.2`), `jasperzhao05/wsplore` (`GPT-6.1 Sol` mean `487.0` from `480, 603, 378`; `GPT-6 Luna` mean `3.0` from `6, 0, 3`), and `mraad/weight-space-programming` (`Claude` unspecified variant `269.4 ± 7.4`).
 4. **Alan Turing Institute (`arXiv:2611.21449`) Partial & Prose-Only Models**: `GPT-5.2` (Breakout `3.5`; Seaquest/Asterix API failure), `Kimi-K3.1-Pro` (`19–68 / 1–2 / 9–42`), `DeepSeek-V4-Pro` (`2–12 / ~0 / ~0`), and `Qwen3.8-27B` (`<5` mean across all 3 games, max `41` in 96 Breakout runs).
 5. **`Mid-NIGHTSHARK/weight-space-programming`**: Breakout-only, non-standard 3,000-episode custom seed schedule, locally recorded labels flagged as unauthenticated (`Gemini Argon 4 Medium` `60.322 ± 1.195`, `Claude Sonnet 5.5` `10.587 ± 0.206`, `GPT-6 Original` `2.516 ± 0.036`, `GPT-6 Luna Extra High` `1.230 ± 0.023`, `DeepSeek Original` `0.493 ± 0.009`).
-6. **`akhaliq/writing-weights-index` OCR Data-Hygiene Warning**: Its `results.jsonl` is `0` bytes and its `app.py` `REFERENCE` list contains severe OCR misreadings of Xingyu Dang's chart (`GPT-5 Astra` vs actual `GPT-6 Astra`; `Gemini 3 Gildron` vs `Gemini 4 Carbon`; `Claude Opus 5.9` vs `Claude Opus 5.5`; `Gemini 3 Alpin 36.0` vs `Gemini 4 Argon 36.6`; `Qwen3 235B A35B` vs `Qwen3.8 2.4T A95B`; `MiniMax Large 2.6` vs `Mistral Large 4 2.6`; `MedsMax MD1 Flash 0.2` vs `MiniMax M3.1 Flash 0.2`; `Step-3 Preview 0.1` vs `Step 5 Preview 0.1`). Not used as a data source.
+6. **`akhaliq/writing-weights-index` OCR Data-Hygiene Warning**: Its `results.jsonl` is `0` bytes and its `app.py` `REFERENCE` list contains severe OCR misreadings of Xingyu Dang's chart (`GPT-5 Astra` vs actual `GPT-6 Astra`; `Gemini 3 Gildron` vs `Gemini 4 Carbon`; `Claude Opus 5.9` vs `Claude Opus 5.5`; `Gemini 3 Alpin 36.0` vs `Gemini 4 Argon 36.6`; `Qwen3 235B A35B` vs `Qwen3.8 2.4T A95B`; `MiniMax Large 2.6` vs `Mistral Large 4 2.6`; `MedsMax MD1 Flash 0.2` vs `MiniMax M3.1 Flash 0.2`; `GLM-5.5` vs `GLM-5.2`; `Step-3 Preview 0.1` vs `Step 5 Preview 0.1`). Not used as a data source.
 
 ---
 
