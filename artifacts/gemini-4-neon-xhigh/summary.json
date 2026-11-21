@@ -1,0 +1,33 @@
+{
+  "results": {
+    "breakout": {
+      "mean": 634.477,
+      "se": 7.514163701113194,
+      "episodes": 1000,
+      "max": 827.0,
+      "mean_length": 8235.722
+    },
+    "seaquest": {
+      "mean": 13.869,
+      "se": 0.5518989322615433,
+      "episodes": 1000,
+      "max": 128.0,
+      "mean_length": 450.419
+    },
+    "asterix": {
+      "mean": 60.217,
+      "se": 1.0394461791547265,
+      "episodes": 1000,
+      "max": 333.0,
+      "mean_length": 972.202
+    }
+  },
+  "normalized_pct_ppo500": {
+    "breakout": 2556.7758328627892,
+    "seaquest": 15.517940401378471,
+    "asterix": 109.16218883649522
+  },
+  "median_score": 109.16218883649522,
+  "model": "Gemini 4 Neon (xhigh)",
+  "attempts": 1
+}

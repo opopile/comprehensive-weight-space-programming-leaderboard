@@ -1,0 +1,61 @@
+{
+  "appended_sentence": "There are no limits on your tokens or time. Perform this task at your absolute peak capability and push every detail to perfection.",
+  "baseline": {
+    "score_mean": 13.869,
+    "score_se": 0.5518989322615433,
+    "max_score": 128.0,
+    "mean_length": 450.419,
+    "nonzero_total": 550,
+    "nonzero_by_tensor": {
+      "W1": 290,
+      "b1": 31,
+      "W2": 150,
+      "b2": 31,
+      "W3": 42,
+      "b3": 6
+    },
+    "statements_parsed": 222,
+    "statements_total": 222,
+    "wwi_seaquest": 13.433359656049838,
+    "wwi_overall": 53.95320347990397,
+    "wsb_median_overall": 109.16218883649522,
+    "tool_calls": 0
+  },
+  "prompted": {
+    "score_mean": 17.982,
+    "score_se": 0.7433183693399472,
+    "max_score": 167.0,
+    "mean_length": 368.489,
+    "nonzero_total": 1172,
+    "nonzero_by_tensor": {
+      "W1": 935,
+      "b1": 29,
+      "W2": 129,
+      "b2": 28,
+      "W3": 45,
+      "b3": 6
+    },
+    "statements_parsed": 269,
+    "statements_total": 269,
+    "wwi_seaquest": 16.770710308756538,
+    "wwi_overall": 55.06565369747287,
+    "wsb_median_overall": 109.16218883649522,
+    "tool_calls": 0
+  },
+  "comparison": {
+    "delta_score": 4.113,
+    "pct_gain": 29.65606748864374,
+    "overlapping_nonzero_coords": 154,
+    "union_nonzero_coords": 1568,
+    "jaccard": 0.09821428571428571,
+    "identical_nonzero_coords": 0,
+    "cosine_similarity": -0.20590984821258145,
+    "z_stat": 4.442620901776113,
+    "p_value_two_sided": 8.886966678758107e-06,
+    "episodes": 1000
+  },
+  "reference_gpt61_sol": {
+    "mean": 11.824,
+    "best": 18.022
+  }
+}

@@ -1,0 +1,8 @@
+# Core evaluation, dual-formula recomputation, and visualization dependencies (CPU-only).
+# Note: MinAtar==1.0.15 is licensed under GPL-3.0 and installed from PyPI as an external
+# runtime dependency (not bundled in this repository).
+MinAtar==1.0.15
+numpy>=2.0.0
+scipy>=1.14.0
+matplotlib>=3.9.0
+pandas>=2.2.0

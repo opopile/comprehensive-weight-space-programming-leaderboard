@@ -1,0 +1,1357 @@
+{
+  "metadata": {
+    "generated_at": "2026-11-21T15:00:00Z",
+    "schema_version": "1.0.0",
+    "baselines": {
+      "ppo500": {
+        "breakout": 25.344,
+        "seaquest": 88.884,
+        "asterix": 55.204
+      },
+      "ppo100": {
+        "breakout": 15.779,
+        "seaquest": 5.617,
+        "asterix": 25.82
+      },
+      "random_paper": {
+        "breakout": 0.55,
+        "seaquest": 0.09,
+        "asterix": 0.49
+      },
+      "random_wsb_implied": {
+        "breakout": 0.545,
+        "seaquest": 0.093,
+        "asterix": 0.492
+      },
+      "random_win_local_seed0": {
+        "breakout": 0.539,
+        "seaquest": 0.086,
+        "asterix": 0.487
+      },
+      "random_zero": {
+        "breakout": 0.0,
+        "seaquest": 0.0,
+        "asterix": 0.0
+      }
+    },
+    "baseline_notes": {
+      "random_wsb_implied": "Exact 3-decimal Linux random baseline reproducing all 6 scores in weight-space-bench/leaderboard/leaderboard.csv (86.46, 48.52, 23.17, 16.15, 2.57, 0.75) and formatting to 0.55 / 0.09 / 0.49 in leaderboard.md. Solving from GPT-6.1 Sol alone (0.5450/0.0950/0.5068) fails rows 2-5 due to 4-decimal norm rounding amplification."
+    }
+  },
+  "models": [
+    {
+      "id": "gpt_6_astra_mit",
+      "model_name": "GPT-6 Astra",
+      "source": "MIT CSAIL",
+      "source_url": "https://rikiyat.github.io/blog/weight-space-programming/",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Codex CLI",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 517.411,
+          "se": 7.416952829044303,
+          "best": 517.411
+        },
+        "seaquest": {
+          "mean": 53.11,
+          "se": 1.3573821814015339,
+          "best": 53.11
+        },
+        "asterix": {
+          "mean": 53.178,
+          "se": 1.023305169277215,
+          "best": 53.178
+        }
+      },
+      "reported_wwi": 60.7,
+      "computed_wwi": 60.6221,
+      "computed_wsb_median": 96.2971,
+      "wsb_published_median": 96.3,
+      "protocol_flag": "clean",
+      "notes": "Original MIT CSAIL Experiment 5 reference run (tool_free=true, neutral system instructions). Xingyu Dang chart displays 60.7; exact paper baseline recomputation yields 60.6221."
+    },
+    {
+      "id": "gemini_4_carbon_dang",
+      "model_name": "Gemini 4 Carbon",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 57.7,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "gpt_6_astra_turing",
+      "model_name": "GPT-6 Astra",
+      "source": "Alan Turing Institute",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Codex / OpenAI API",
+      "attempts": "3-5/game",
+      "scores": {
+        "breakout": {
+          "mean": 456.9,
+          "se": null,
+          "best": 550.0
+        },
+        "seaquest": {
+          "mean": 25.5,
+          "se": null,
+          "best": null
+        },
+        "asterix": {
+          "mean": 66.2,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 57.2207,
+      "computed_wsb_median": 120.0972,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Alan Turing Institute (arXiv:2611.21449, Nov 16, 2026) zero-tool single-reply Table 1 means; Breakout 3-run subset (514, 550, 307) cited in paper text."
+    },
+    {
+      "id": "gpt_6_astra_yzw22",
+      "model_name": "GPT-6 Astra",
+      "source": "yzw-22",
+      "source_url": "https://github.com/yzw-22/astra-weight-space-repro",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "OpenAI via ofox relay",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 470.8,
+          "se": 37.8,
+          "best": 537.3
+        },
+        "seaquest": {
+          "mean": 28.9,
+          "se": 7.5,
+          "best": 38.2
+        },
+        "asterix": {
+          "mean": 58.2,
+          "se": 8.7,
+          "best": 69.6
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 56.9405,
+      "computed_wsb_median": 105.4757,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn zero-tool replication (temperature=1.0, max_tokens=40960, 3 attempts/game)."
+    },
+    {
+      "id": "gemini_4_neon_xhigh_local_baseline",
+      "model_name": "Gemini 4 Neon (XHigh)",
+      "source": "Antigravity (Local)",
+      "source_url": "local_experimental_artifact",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Antigravity (default ctx)",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 634.477,
+          "se": 7.514163701113194,
+          "best": 634.477
+        },
+        "seaquest": {
+          "mean": 13.869,
+          "se": 0.5518989322615433,
+          "best": 13.869
+        },
+        "asterix": {
+          "mean": 60.217,
+          "se": 1.0394461791547265,
+          "best": 60.217
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 53.9532,
+      "computed_wsb_median": 109.1622,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Local verbatim-prompt baseline in fresh default Antigravity chat session (no custom memories/skills/rules, tool_calls=0, single-turn pure text, n=1/game)."
+    },
+    {
+      "id": "claude_opus_5_5_dang",
+      "model_name": "Claude Opus 5.5",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 51.2,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "gpt_6_1_sol_wsb",
+      "model_name": "GPT-6.1 Sol",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 457.893,
+          "se": null,
+          "best": 473.974
+        },
+        "seaquest": {
+          "mean": 11.824,
+          "se": null,
+          "best": 18.022
+        },
+        "asterix": {
+          "mean": 47.798,
+          "se": null,
+          "best": 64.867
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 50.9667,
+      "computed_wsb_median": 86.4642,
+      "wsb_published_median": 86.46,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k max_output_tokens, 3 attempts/game, $2.2497 API cost)."
+    },
+    {
+      "id": "ppo_500m_mit",
+      "model_name": "PPO-500M (best seed)",
+      "source": "MIT CSAIL",
+      "source_url": "https://github.com/RikiyaT/lm_understand-logs",
+      "tier": "baseline",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "N/A (RL baseline)",
+      "platform_api": "N/A (RL baseline)",
+      "attempts": "3 seeds (best)",
+      "scores": {
+        "breakout": {
+          "mean": 25.344,
+          "se": 0.12106329055630498,
+          "best": 25.344
+        },
+        "seaquest": {
+          "mean": 88.884,
+          "se": 1.561826445494456,
+          "best": 88.884
+        },
+        "asterix": {
+          "mean": 55.204,
+          "se": 0.6358889358518033,
+          "best": 55.204
+        }
+      },
+      "reported_wwi": 50.0,
+      "computed_wwi": 50.0,
+      "computed_wsb_median": 100.0,
+      "wsb_published_median": 100.0,
+      "protocol_flag": "reference_baseline",
+      "notes": "Trained 600-32-32-6 tanh PPO-500M best seed per game (s0/s2/s1) from RikiyaT/lm_understand-logs minatar_eval.json; defines WWI=50.0 and WSB=100.0."
+    },
+    {
+      "id": "claude_opus_5_5_dhaneshnm",
+      "model_name": "Claude Opus 5.5",
+      "source": "dhaneshnm",
+      "source_url": "https://github.com/dhaneshnm/wsp-replication",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "Anthropic API",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 247.06666666666666,
+          "se": null,
+          "best": 449.7
+        },
+        "seaquest": {
+          "mean": 22.2,
+          "se": null,
+          "best": 51.7
+        },
+        "asterix": {
+          "mean": 34.0,
+          "se": null,
+          "best": 45.6
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 49.5935,
+      "computed_wsb_median": 61.2458,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn Anthropic API runs (64k cap B/A, 128k S; 1 earlier 64k Seaquest call hit cap and was excluded; $11.75 total API cost)."
+    },
+    {
+      "id": "gpt_6_astra_openwsp",
+      "model_name": "GPT-6 Astra",
+      "source": "openwsp",
+      "source_url": "https://github.com/openwsp/openwsp",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Codex CLI",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 458.73,
+          "se": 4.99,
+          "best": 458.73
+        },
+        "seaquest": {
+          "mean": 2.407,
+          "se": 0.106,
+          "best": 2.407
+        },
+        "asterix": {
+          "mean": 39.709,
+          "se": 0.73,
+          "best": 39.709
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 46.3872,
+      "computed_wsb_median": 71.68,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn Codex CLI run (xhigh, verbosity=low, seed=20261103)."
+    },
+    {
+      "id": "claude_opus_5_5_turing",
+      "model_name": "Claude Opus 5.5",
+      "source": "Alan Turing Institute",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Claude / Anthropic",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 112.0,
+          "se": null,
+          "best": 336.0
+        },
+        "seaquest": {
+          "mean": 0.0,
+          "se": null,
+          "best": 0.0
+        },
+        "asterix": {
+          "mean": 45.1,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 42.2385,
+      "computed_wsb_median": 81.5331,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Alan Turing Institute (arXiv:2611.21449); runs hitting the output token cap before emitting edits (2/3 Breakout, 3/3 Seaquest) were scored 0."
+    },
+    {
+      "id": "claude_fable_5_1_ludvik1kul",
+      "model_name": "Claude Fable 5.1",
+      "source": "Ludvik1kul",
+      "source_url": "https://github.com/Ludvik1kul/weight-space-programming-replication",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Claude Code session (in-context)",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 76.4,
+          "se": 2.5,
+          "best": 76.4
+        },
+        "seaquest": {
+          "mean": 1.4,
+          "se": 0.1,
+          "best": 1.4
+        },
+        "asterix": {
+          "mean": 32.7,
+          "se": 0.7,
+          "best": 32.7
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 37.958,
+      "computed_wsb_median": 58.8698,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn blinded prompt execution inside a Claude Code session (no API call)."
+    },
+    {
+      "id": "claude_fable_5_1_barneyjm_matched",
+      "model_name": "Claude Fable 5.1",
+      "source": "Barneyjm",
+      "source_url": "https://github.com/Barneyjm/weight-space-minatar",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh (B/S), max (A)",
+      "platform_api": "Claude Code subagent",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 61.3,
+          "se": 2.1,
+          "best": 61.3
+        },
+        "seaquest": {
+          "mean": 0.8,
+          "se": 0.0,
+          "best": 0.8
+        },
+        "asterix": {
+          "mean": 36.2,
+          "se": 0.8,
+          "best": 36.2
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 37.1004,
+      "computed_wsb_median": 65.2667,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Matched 600-32-32-6 tanh Experiment 5 protocol (matched/ directory); max effort hit 64k cap on Breakout/Seaquest so those were rerun at xhigh with <60k note."
+    },
+    {
+      "id": "gemini_4_argon_dang",
+      "model_name": "Gemini 4 Argon",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 36.6,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "kimi_k3_1_pro_dang",
+      "model_name": "Kimi K3.1 Pro",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 29.8,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "claude_opus_5_turing",
+      "model_name": "Claude Opus 5",
+      "source": "Alan Turing Institute",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "Claude / Anthropic",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 30.9,
+          "se": null,
+          "best": null
+        },
+        "seaquest": {
+          "mean": 0.4,
+          "se": null,
+          "best": null
+        },
+        "asterix": {
+          "mean": 18.5,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 26.7168,
+      "computed_wsb_median": 32.9166,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Alan Turing Institute (arXiv:2611.21449, footnote a: high effort; xhigh hit output cap in 10/12 attempts)."
+    },
+    {
+      "id": "gpt_5_6_sol_turing",
+      "model_name": "GPT-5.6 Sol",
+      "source": "Alan Turing Institute",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "OpenAI",
+      "attempts": "3-5/game",
+      "scores": {
+        "breakout": {
+          "mean": 31.1,
+          "se": null,
+          "best": null
+        },
+        "seaquest": {
+          "mean": 0.8,
+          "se": null,
+          "best": null
+        },
+        "asterix": {
+          "mean": 14.6,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 25.4983,
+      "computed_wsb_median": 25.7886,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Alan Turing Institute (arXiv:2611.21449); GPT-5.6 Sol Table 1 means."
+    },
+    {
+      "id": "claude_opus_5_5_wsb",
+      "model_name": "Claude Opus 5.5",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 17.532,
+          "se": null,
+          "best": 40.829
+        },
+        "seaquest": {
+          "mean": 2.907,
+          "se": null,
+          "best": 8.535
+        },
+        "asterix": {
+          "mean": 27.038,
+          "se": null,
+          "best": 31.363
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 25.4649,
+      "computed_wsb_median": 48.5214,
+      "wsb_published_median": 48.52,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k cap; 2/9 replies hit 64k limit before edits block and scored 0; $8.3177 API cost)."
+    },
+    {
+      "id": "ppo_100m_mit",
+      "model_name": "PPO-100M (best seed)",
+      "source": "MIT CSAIL",
+      "source_url": "https://github.com/RikiyaT/lm_understand-logs",
+      "tier": "baseline",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "N/A (RL baseline)",
+      "platform_api": "N/A (RL baseline)",
+      "attempts": "10/3/10 seeds (best)",
+      "scores": {
+        "breakout": {
+          "mean": 15.779,
+          "se": 0.09258904757978523,
+          "best": 15.779
+        },
+        "seaquest": {
+          "mean": 5.617,
+          "se": 0.04926192990269197,
+          "best": 5.617
+        },
+        "asterix": {
+          "mean": 25.82,
+          "se": 0.44719971778567524,
+          "best": 25.82
+        }
+      },
+      "reported_wwi": 25.2,
+      "computed_wwi": 25.1852,
+      "computed_wsb_median": 46.2953,
+      "wsb_published_median": 46.3,
+      "protocol_flag": "reference_baseline",
+      "notes": "Trained 600-32-32-6 tanh PPO-100M best seed per game (s2/s2/s6) from RikiyaT/lm_understand-logs minatar_eval.json; WWI=25.1852 (25.2 on Dang chart)."
+    },
+    {
+      "id": "deepseek_v4_1_flash_yzw22",
+      "model_name": "DeepSeek V4.1-Flash",
+      "source": "yzw-22",
+      "source_url": "https://github.com/yzw-22/astra-weight-space-repro",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "max",
+      "platform_api": "DeepSeek API",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 32.1,
+          "se": 18.8,
+          "best": 69.8
+        },
+        "seaquest": {
+          "mean": 0.3,
+          "se": 0.2,
+          "best": 0.6
+        },
+        "asterix": {
+          "mean": 6.2,
+          "se": 1.5,
+          "best": 8.4
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 21.8937,
+      "computed_wsb_median": 10.4361,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn zero-tool DeepSeek API replication (131,072 max_tokens, 3 attempts/game)."
+    },
+    {
+      "id": "claude_sonnet_5_5_wsb",
+      "model_name": "Claude Sonnet 5.5",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 6.565,
+          "se": null,
+          "best": 7.389
+        },
+        "seaquest": {
+          "mean": 1.03,
+          "se": null,
+          "best": 1.263
+        },
+        "asterix": {
+          "mean": 13.167,
+          "se": null,
+          "best": 29.46
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 13.1274,
+      "computed_wsb_median": 23.1696,
+      "wsb_published_median": 23.17,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k cap, 3 attempts/game, $2.2818 API cost)."
+    },
+    {
+      "id": "qwen3_8_2_4t_a95b_dang",
+      "model_name": "Qwen3.8 2.4T A95B",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 12.5,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "kimi_k3_1_pro_wsb",
+      "model_name": "Kimi K3.1 Pro",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 6.81,
+          "se": null,
+          "best": 8.532
+        },
+        "seaquest": {
+          "mean": 0.292,
+          "se": null,
+          "best": 0.643
+        },
+        "asterix": {
+          "mean": 9.329,
+          "se": null,
+          "best": 22.273
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 11.4312,
+      "computed_wsb_median": 16.1549,
+      "wsb_published_median": 16.15,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k cap, 3 attempts/game, $2.2887 API cost)."
+    },
+    {
+      "id": "deepseek_v4_1_flash_1017_dang",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 10.0,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "muse_wonder_wsb",
+      "model_name": "Muse Wonder",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 7.404,
+          "se": null,
+          "best": 11.179
+        },
+        "seaquest": {
+          "mean": 0.644,
+          "se": null,
+          "best": 0.884
+        },
+        "asterix": {
+          "mean": 1.899,
+          "se": null,
+          "best": 2.138
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 8.2625,
+      "computed_wsb_median": 2.5752,
+      "wsb_published_median": 2.57,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k cap, 3 attempts/game, $3.4872 API cost). CSV 2.57 matches random_wsb_implied (0.545/0.093/0.492)."
+    },
+    {
+      "id": "deepseek_v4_pro_yzw22",
+      "model_name": "DeepSeek V4-Pro",
+      "source": "yzw-22",
+      "source_url": "https://github.com/yzw-22/astra-weight-space-repro",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "max",
+      "platform_api": "DeepSeek API",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 7.0,
+          "se": 1.3,
+          "best": 8.4
+        },
+        "seaquest": {
+          "mean": 0.6,
+          "se": 0.1,
+          "best": 0.8
+        },
+        "asterix": {
+          "mean": 1.4,
+          "se": 0.7,
+          "best": 2.9
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 7.617,
+      "computed_wsb_median": 1.6632,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Clean single-turn zero-tool DeepSeek API replication (1 Asterix 65k cap call resampled at 131,072 max_tokens)."
+    },
+    {
+      "id": "glm_5_5_dang",
+      "model_name": "GLM-5.5",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 6.2,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "claude_opus_4_5_turing",
+      "model_name": "Claude Opus 4.5",
+      "source": "Alan Turing Institute",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Claude / Anthropic",
+      "attempts": "3-5/game",
+      "scores": {
+        "breakout": {
+          "mean": 3.4,
+          "se": null,
+          "best": 10.7
+        },
+        "seaquest": {
+          "mean": 0.1,
+          "se": null,
+          "best": null
+        },
+        "asterix": {
+          "mean": 0.8,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 3.6281,
+      "computed_wsb_median": 0.5666,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Alan Turing Institute (arXiv:2611.21449); Breakout 5 runs (1.6, 10.7, 2.5, 1.3, 1.0)."
+    },
+    {
+      "id": "mistral_large_4_dang",
+      "model_name": "Mistral Large 4",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 2.6,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "deepseek_v4_1_flash_wsb",
+      "model_name": "DeepSeek V4.1 Flash",
+      "source": "weight-space-bench",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "OpenRouter",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 0.73,
+          "se": null,
+          "best": 1.1
+        },
+        "seaquest": {
+          "mean": 0.173,
+          "se": null,
+          "best": 0.429
+        },
+        "asterix": {
+          "mean": 1.822,
+          "se": null,
+          "best": 3.097
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 1.0636,
+      "computed_wsb_median": 0.726,
+      "wsb_published_median": 0.75,
+      "protocol_flag": "clean",
+      "notes": "eomcaleb/weight-space-bench via OpenRouter (high, 64k cap, 3 attempts/game, $0.3559 API cost). CSV 0.75 matches random_wsb_implied (0.545/0.093/0.492)."
+    },
+    {
+      "id": "minimax_m3_1_flash_dang",
+      "model_name": "MiniMax M3.1 Flash",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 0.2,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "step_5_preview_dang",
+      "model_name": "Step 5 Preview",
+      "source": "Xingyu Dang",
+      "source_url": "https://x.com/xingyudang/status/2117428789068386630",
+      "tier": "reported_wwi_only",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": false,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Unspecified (per source)",
+      "attempts": "Unspecified (per source)",
+      "scores": null,
+      "reported_wwi": 0.1,
+      "computed_wwi": null,
+      "computed_wsb_median": null,
+      "wsb_published_median": null,
+      "protocol_flag": "reported_wwi_only",
+      "notes": "Transcribed directly from Xingyu Dang Writing Weights Index chart (Nov 2, 2026). Per-game raw scores, thinking effort, API/platform, and attempt count not publicly disclosed."
+    },
+    {
+      "id": "uniform_random",
+      "model_name": "Uniform random (all-zero)",
+      "source": "MIT CSAIL / WSB",
+      "source_url": "https://github.com/eomcaleb/weight-space-bench",
+      "tier": "baseline",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "N/A (RL baseline)",
+      "platform_api": "N/A (RL baseline)",
+      "attempts": "1,000 episodes",
+      "scores": {
+        "breakout": {
+          "mean": 0.55,
+          "se": null,
+          "best": 0.55
+        },
+        "seaquest": {
+          "mean": 0.09,
+          "se": null,
+          "best": 0.09
+        },
+        "asterix": {
+          "mean": 0.49,
+          "se": null,
+          "best": 0.49
+        }
+      },
+      "reported_wwi": 0.0,
+      "computed_wwi": 0.0,
+      "computed_wsb_median": 0.0,
+      "wsb_published_median": 0.0,
+      "protocol_flag": "reference_baseline",
+      "notes": "All-zero network uniformly sampling 6 actions; defines WWI=0.0 and WSB=0.0."
+    },
+    {
+      "id": "gpt_6_astra_zhangyiqun018",
+      "model_name": "GPT-6 Astra (Medians Only)",
+      "source": "ZhangYiqun018",
+      "source_url": "https://github.com/ZhangYiqun018/rethinking-weight-space-programming",
+      "tier": "full_3game_medians_only",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "OpenAI-compatible API",
+      "attempts": "10-11/game",
+      "scores": {
+        "breakout": {
+          "mean": 487.772,
+          "se": null,
+          "best": null
+        },
+        "seaquest": {
+          "mean": 33.525,
+          "se": null,
+          "best": null
+        },
+        "asterix": {
+          "mean": 62.523,
+          "se": null,
+          "best": null
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 58.5488,
+      "computed_wsb_median": 113.3768,
+      "wsb_published_median": null,
+      "protocol_flag": "medians_only",
+      "notes": "Reports per-game medians across n=11 (Breakout, IQR 469.4..526.1) and n=10 (Seaquest IQR 18.0..37.7; Asterix IQR 48.8..65.8) rather than means; excluded from main mean-based rankings."
+    },
+    {
+      "id": "gemini_4_neon_xhigh_local_prompted",
+      "model_name": "Gemini 4 Neon (XHigh, Seaquest Prompted)",
+      "source": "Antigravity (Local)",
+      "source_url": "local_experimental_artifact",
+      "tier": "ablation_prompted",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Antigravity (default ctx)",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 634.477,
+          "se": 7.514163701113194,
+          "best": 634.477
+        },
+        "seaquest": {
+          "mean": 17.982,
+          "se": 0.7433183693399472,
+          "best": 17.982
+        },
+        "asterix": {
+          "mean": 60.217,
+          "se": 1.0394461791547265,
+          "best": 60.217
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 55.0657,
+      "computed_wsb_median": 109.1622,
+      "wsb_published_median": null,
+      "protocol_flag": "ablation_prompted",
+      "notes": "Seaquest prompt-intervention ablation (1-sentence encouragement appended to verbatim prompt; Breakout & Asterix kept at baseline); intentionally separated from verbatim-prompt main leaderboards."
+    },
+    {
+      "id": "claude_opus_5_5_matinkhajavi",
+      "model_name": "Claude Opus 5.5 (Resumed)",
+      "source": "MatinKhajavi",
+      "source_url": "https://github.com/MatinKhajavi/Weight-Space-Programming",
+      "tier": "full_3game_resumed",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Claude Code CLI 2.1.317",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 483.586,
+          "se": 5.177,
+          "best": 483.586
+        },
+        "seaquest": {
+          "mean": 11.425,
+          "se": 0.451,
+          "best": 11.425
+        },
+        "asterix": {
+          "mean": 47.003,
+          "se": 1.037,
+          "best": 47.003
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 50.7958,
+      "computed_wsb_median": 85.0111,
+      "wsb_published_median": null,
+      "protocol_flag": "resumed_after_cap",
+      "notes": "Resumed after hitting 128k output cap on Breakout (cut=0.509) and Seaquest (cut=0.119, restarted on 2nd attempt); separated from single-turn clean rankings."
+    },
+    {
+      "id": "claude_opus_5_5_rekigan",
+      "model_name": "Claude Opus 5.5 (Resumed)",
+      "source": "Rekigan",
+      "source_url": "https://github.com/Rekigan/minatar-weights-vs-python",
+      "tier": "full_3game_resumed",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "Unspecified (per source)",
+      "platform_api": "Claude Code subagent",
+      "attempts": "1/1/3",
+      "scores": {
+        "breakout": {
+          "mean": 91.6,
+          "se": null,
+          "best": 91.6
+        },
+        "seaquest": {
+          "mean": 32.7,
+          "se": null,
+          "best": 32.7
+        },
+        "asterix": {
+          "mean": 45.833333333333336,
+          "se": null,
+          "best": 60.9
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 50.2584,
+      "computed_wsb_median": 82.8734,
+      "wsb_published_median": null,
+      "protocol_flag": "resumed_after_cap",
+      "notes": "Breakout, Seaquest, and 2/3 Asterix attempts (49.2*, 60.9, 27.4*) received auto-resume after hitting output cap; separated from single-turn clean rankings."
+    },
+    {
+      "id": "claude_fable_5_1_matinkhajavi",
+      "model_name": "Claude Fable 5.1 (Resumed)",
+      "source": "MatinKhajavi",
+      "source_url": "https://github.com/MatinKhajavi/Weight-Space-Programming",
+      "tier": "full_3game_resumed",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Claude Code CLI 2.1.317",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 38.445,
+          "se": 1.006,
+          "best": 38.445
+        },
+        "seaquest": {
+          "mean": 50.787,
+          "se": 1.066,
+          "best": 50.787
+        },
+        "asterix": {
+          "mean": 49.394,
+          "se": 0.892,
+          "best": 49.394
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 47.9966,
+      "computed_wsb_median": 89.3811,
+      "wsb_published_median": null,
+      "protocol_flag": "resumed_after_cap",
+      "notes": "Resumed after hitting 128k output cap on Breakout (cut=0.509) and Seaquest (cut=0.119); separated from single-turn clean rankings."
+    },
+    {
+      "id": "claude_opus_5_5_sir_olexander",
+      "model_name": "Claude Opus 5.5 (Resumed)",
+      "source": "Sir-Olexander",
+      "source_url": "https://github.com/Sir-Olexander/lm_understand-logs-claude",
+      "tier": "full_3game_resumed",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Claude Code CLI 2.1.318",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 57.358,
+          "se": 1.651,
+          "best": 57.358
+        },
+        "seaquest": {
+          "mean": 8.578,
+          "se": 0.238,
+          "best": 8.578
+        },
+        "asterix": {
+          "mean": 72.007,
+          "se": 1.183,
+          "best": 72.007
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 44.9989,
+      "computed_wsb_median": 130.7106,
+      "wsb_published_median": null,
+      "protocol_flag": "resumed_after_cap",
+      "notes": "Auto-continuation fired once on Breakout and Seaquest after hitting 128k token cap (NOTES.md dev 24); separated from single-turn clean rankings."
+    }
+  ],
+  "partial_and_non_comparable": [
+    {
+      "id": "weightbench_arxiv_2611_18553",
+      "title": "WeightBench (Aayush-Marasini/WeightBench, arXiv:2611.18553, Nov 13, 2026)",
+      "source_url": "https://arxiv.org/abs/2611.18553",
+      "reason_excluded": "Different architecture (ReLU vs tanh), greedy argmax vs softmax sampling, 100 episodes / 1,000 max steps, channel-first encoding, agentic CLI sandbox (80-200 turns with Python/NumPy), and normalized S_WB scores against non-Experiment-5 S_max ceilings without public raw S_edit returns.",
+      "summary_results": {
+        "claude-opus-5-5": "TR04-GAME-001..003 S_WB: 1.0 / 1.0 / 1.0 (2 samples, Claude Code)",
+        "openai/gpt-6.1-sol": "TR04-GAME-001..003 S_WB: 1.0 / 0.4046 / 0.9165 (1 sample)",
+        "claude-sonnet-5-5": "TR04-GAME-001..003 S_WB: 0.486 / 0.0797-0.5666 / 0.1475-0.4010",
+        "claude-haiku-5-5": "TR04-GAME-001..003 S_WB: 0.486 / 0.0111-invalid / 0.1593-0.3733",
+        "deepseek/deepseek-v4-flash": "0.0 (quarantined / invalid)"
+      }
+    },
+    {
+      "id": "barneyjm_main_256x256",
+      "title": "Barneyjm/weight-space-minatar main table",
+      "source_url": "https://github.com/Barneyjm/weight-space-minatar",
+      "reason_excluded": "Uses wider 256x256 hidden layers, unmerged 4/10 input channels, and allows Python/NumPy tools (distinct from the matched/ 600-32-32-6 entry included in the main leaderboard).",
+      "summary_results": {
+        "Claude Fable 5.1": "533.9 Breakout / 19.0 Seaquest / 23.1 Asterix",
+        "Claude Opus 5.5": "7.1 Breakout / 13.2 Seaquest / 13.0 Asterix"
+      }
+    },
+    {
+      "id": "breakout_only_repos",
+      "title": "Breakout-only verbatim-prompt replications",
+      "source_url": "https://github.com/niqbal/fable-weight-space-breakout",
+      "reason_excluded": "Missing Seaquest and Asterix evaluations; cannot compute 3-game WWI or WSB median.",
+      "summary_results": {
+        "niqbal/fable-weight-space-breakout": "Claude Fable 5.1: 501.6 ± 5.8 (run1), 2/3 hit 128k cap = 0, 3-run mean 167.2",
+        "jasperzhao05/wsplore": "GPT-6.1 Sol: mean 487.0 (480, 603, 378); GPT-6 Luna: mean 3.0 (6, 0, 3)",
+        "mraad/weight-space-programming": "Claude (unspecified variant): 269.4 ± 7.4"
+      }
+    },
+    {
+      "id": "turing_partial_and_prose_only",
+      "title": "Alan Turing Institute (arXiv:2611.21449) partial and prose-only models",
+      "source_url": "https://arxiv.org/abs/2611.21449",
+      "reason_excluded": "Incomplete across the 3 games or reported only as prose range summaries rather than exact per-game means.",
+      "summary_results": {
+        "GPT-5.2": "Breakout 3.5 (Seaquest and Asterix lost to API failure)",
+        "Kimi-K3.1-Pro": "19-68 Breakout / 1-2 Seaquest / 9-42 Asterix",
+        "DeepSeek-V4-Pro": "2-12 Breakout / ~0 Seaquest / ~0 Asterix",
+        "Qwen3.8-27B": "<5 mean across all 3 games (max 41 across 96 Breakout runs)"
+      }
+    },
+    {
+      "id": "mid_nightshark_unauthenticated",
+      "title": "Mid-NIGHTSHARK/weight-space-programming",
+      "source_url": "https://github.com/Mid-NIGHTSHARK/weight-space-programming",
+      "reason_excluded": "Breakout-only evaluation, non-standard 3,000-episode custom seed schedule, and locally recorded model labels flagged as unauthenticated.",
+      "summary_results": {
+        "Gemini Argon 4 Medium": "60.322 ± 1.195 (Breakout, 3,000 ep)",
+        "Claude Sonnet 5.5": "10.587 ± 0.206 (Breakout, 3,000 ep)",
+        "GPT-6 Original": "2.516 ± 0.036 (Breakout, 3,000 ep)",
+        "GPT-6 Luna Extra High": "1.230 ± 0.023 (Breakout, 3,000 ep)",
+        "DeepSeek Original": "0.493 ± 0.009 (Breakout, 3,000 ep)"
+      }
+    },
+    {
+      "id": "akhaliq_ocr_warning",
+      "title": "akhaliq/writing-weights-index Hugging Face Space (OCR data-hygiene warning)",
+      "source_url": "https://huggingface.co/spaces/akhaliq/writing-weights-index",
+      "reason_excluded": "Dataset results.jsonl is 0 bytes (zero verified runs), and app.py REFERENCE list contains severe OCR misreadings of Xingyu Dang's chart.",
+      "summary_results": {
+        "ocr_misreadings_to_avoid": "GPT-5 Astra (actual: GPT-6 Astra), Gemini 3 Gildron (Gemini 4 Carbon), Claude Opus 5.9 (Claude Opus 5.5), Gemini 3 Alpin 36.0 (Gemini 4 Argon 36.6), Qwen3 235B A35B (Qwen3.8 2.4T A95B), MiniMax Large 2.6 (Mistral Large 4 2.6), MedsMax MD1 Flash 0.2 (MiniMax M3.1 Flash 0.2), Step-3 Preview 0.1 (Step 5 Preview 0.1)"
+      }
+    }
+  ]
+}
