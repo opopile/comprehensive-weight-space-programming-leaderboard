@@ -165,7 +165,7 @@ def _assign_ranks(rows: list[dict[str, Any]]) -> list[str]:
 
 
 def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 300) -> Path:
-    """Chart 1: Writing Weights Index (WWI) Comprehensive Leaderboard (33 entries)."""
+    """Chart 1: Writing Weights Index (WWI) Comprehensive Leaderboard."""
     models: list[dict[str, Any]] = models_payload["models"]
     by_id = {m["id"]: m for m in models}
     rows = sorted([m for m in models if m["include_in_main_wwi"]], key=_wwi_sort_key)
@@ -175,12 +175,16 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     ppo100_wwi = _wwi_value(by_id["ppo_100m_mit"])
 
     n = len(rows)
+    n_base = sum(1 for r in rows if r["tier"] == "baseline")
+    n_llm = n - n_base
+    n_excl = sum(1 for m in models if not m["include_in_main_wwi"])
     y_pos = np.arange(n)
     values = [_wwi_value(r) for r in rows]
 
-    fig, ax = plt.subplots(figsize=(17.5, 20.8))
+    fig_h = max(20.8, 0.63 * n)
+    fig, ax = plt.subplots(figsize=(17.5, fig_h))
     fig.patch.set_facecolor("white")
-    fig.subplots_adjust(left=0.39, right=0.96, top=0.858, bottom=0.052)
+    fig.subplots_adjust(left=0.39, right=0.96, top=0.865, bottom=0.050)
 
     for idx, rec in enumerate(rows):
         if rec["id"] == "gemini_4_neon_xhigh_local_baseline":
@@ -242,6 +246,12 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
             rep = float(rec["reported_wwi"])
             val_label = f"{val:.2f} ({rep:.1f} reported in Dang)"
             t_color, t_weight = TEXT_DARK, "bold"
+        elif rec["id"] == "claude_fable_5_2_high_shawnghu":
+            val_label = f"{val:.2f}  [9/9 end_turn]"
+            t_color, t_weight = TEXT_DARK, "bold"
+        elif rec["id"] == "claude_fable_5_2_xhigh_shawnghu":
+            val_label = f"{val:.2f}  [8/9 hit 128k cap; 1 Seaquest = 66.1]"
+            t_color, t_weight = TEXT_MUTED, "normal"
         elif rec["id"] == "gemini_4_neon_xhigh_local_baseline":
             val_label = f"{val:.2f}  [Local Baseline]"
             t_color, t_weight = COLOR_NEON_EDGE, "bold"
@@ -313,7 +323,7 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     fig.text(
         0.50,
         0.943,
-        "30 Verbatim-Prompt LLM Entries + 3 RL Reference Baselines (n = 33) | WWI = mean_3games [100 * q / (1 + q)], q = max(0, score - Random) / (PPO-500M - Random)",
+        f"{n_llm} Verbatim-Prompt LLM Entries + {n_base} RL Reference Baselines (n = {n}) | WWI = mean_3games [100 * q / (1 + q)], q = max(0, score - Random) / (PPO-500M - Random)",
         ha="center",
         va="top",
         fontsize=9.6,
@@ -326,7 +336,7 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     footer = (
         f"Paper Baselines: PPO-500M ({p5['breakout']} / {p5['seaquest']} / {p5['asterix']}) & "
         f"Random ({rp['breakout']} / {rp['seaquest']} / {rp['asterix']}). "
-        "Excluded from verbatim main rankings (n = 6): 4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation."
+        f"Excluded from verbatim main rankings (n = {n_excl}): 4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation."
     )
     fig.text(0.50, 0.015, footer, ha="center", va="bottom", fontsize=8.3, color=TEXT_FOOTER)
 
@@ -339,7 +349,7 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
 
 
 def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 300) -> Path:
-    """Chart 2: weight-space-bench (WSB) PPO-500M Median Normalized Leaderboard (23 entries)."""
+    """Chart 2: weight-space-bench (WSB) PPO-500M Median Normalized Leaderboard."""
     models: list[dict[str, Any]] = models_payload["models"]
     by_id = {m["id"]: m for m in models}
     rows = sorted([m for m in models if m["include_in_main_wsb"]], key=_wsb_sort_key)
@@ -349,11 +359,15 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     ppo100_wsb = float(by_id["ppo_100m_mit"]["computed_wsb_median"])
 
     n = len(rows)
+    n_base = sum(1 for r in rows if r["tier"] == "baseline")
+    n_llm = n - n_base
+    n_excl = sum(1 for m in models if not m["include_in_main_wsb"])
     values = [float(r["computed_wsb_median"]) for r in rows]
 
-    fig, ax = plt.subplots(figsize=(17.5, 14.8))
+    fig_h = max(14.8, 0.64 * n)
+    fig, ax = plt.subplots(figsize=(17.5, fig_h))
     fig.patch.set_facecolor("white")
-    fig.subplots_adjust(left=0.39, right=0.96, top=0.865, bottom=0.075)
+    fig.subplots_adjust(left=0.39, right=0.96, top=0.870, bottom=0.070)
 
     for idx, rec in enumerate(rows):
         if rec["id"] == "gemini_4_neon_xhigh_local_baseline":
@@ -410,6 +424,12 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
         if rec["id"] == "gemini_4_neon_xhigh_local_baseline":
             val_label = f"{val:.2f} ({val:.1f})  [Local Baseline]"
             t_color, t_weight = COLOR_NEON_EDGE, "bold"
+        elif rec["id"] == "claude_fable_5_2_high_shawnghu":
+            val_label = f"{val:.2f}  [9/9 end_turn]"
+            t_color, t_weight = TEXT_DARK, "bold"
+        elif rec["id"] == "claude_fable_5_2_xhigh_shawnghu":
+            val_label = f"{val:.2f}  [8/9 hit 128k cap]"
+            t_color, t_weight = TEXT_MUTED, "normal"
         elif rec["tier"] == "baseline":
             val_label = f"{val:.2f} [RL baseline]"
             t_color, t_weight = TEXT_MUTED, "bold"
@@ -433,9 +453,9 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
 
     _draw_two_line_ylabels(ax, rows, rank_tags, highlight_id="gemini_4_neon_xhigh_local_baseline")
 
-    ax.set_xlim(0, 152)
+    ax.set_xlim(0, 162)
     ax.set_ylim(n - 0.35, -0.75)
-    ax.set_xticks([0, 20, 40, 60, 80, 100, 120, 140])
+    ax.set_xticks([0, 20, 40, 60, 80, 100, 120, 140, 160])
     ax.set_xlabel(
         "WSB Median Normalized Score (% of PPO-500M above Random)",
         fontsize=10.5,
@@ -480,7 +500,7 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     fig.text(
         0.52,
         0.935,
-        "20 Clean Verbatim 3-Game LLM Runs + 3 RL Reference Baselines (n = 23) | WSB = 100 * median_3games [(score - Random) / (PPO-500M - Random)]",
+        f"{n_llm} Clean Verbatim 3-Game LLM Runs + {n_base} RL Reference Baselines (n = {n}) | WSB = 100 * median_3games [(score - Random) / (PPO-500M - Random)]",
         ha="center",
         va="top",
         fontsize=9.6,
@@ -488,7 +508,7 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     )
 
     footer = (
-        "Excluded from WSB Median (n = 16): 10 reported_wwi_only entries (N/A: per-game scores not publicly disclosed) "
+        f"Excluded from WSB Median (n = {n_excl}): 10 reported_wwi_only entries (N/A: per-game scores not publicly disclosed) "
         "+ 6 non-clean entries (4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation)."
     )
     fig.text(0.52, 0.018, footer, ha="center", va="bottom", fontsize=8.3, color=TEXT_FOOTER)
@@ -520,11 +540,14 @@ def generate_chart3(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     rank_tags = _assign_ranks(core_rows)
 
     n = len(core_rows)
+    n_base = sum(1 for r in core_rows if r["tier"] == "baseline")
+    n_llm = n - n_base
+    fig_h = max(9.6, 0.74 * n)
     fig, axes = plt.subplots(
         1,
         3,
         sharey=True,
-        figsize=(19.2, 9.6),
+        figsize=(19.2, fig_h),
         gridspec_kw={"wspace": 0.12, "left": 0.27, "right": 0.975, "top": 0.805, "bottom": 0.125},
     )
     fig.patch.set_facecolor("white")
@@ -532,7 +555,7 @@ def generate_chart3(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     panels = [
         ("breakout", "MinAtar Breakout\n(Mean Episode Return)", float(ppo500["breakout"]), (0, 770), [0, 150, 300, 450, 600, 750], "left"),
         ("seaquest", "MinAtar Seaquest\n(Mean Episode Return)", float(ppo500["seaquest"]), (0, 108), [0, 20, 40, 60, 80, 100], "right"),
-        ("asterix", "MinAtar Asterix\n(Mean Episode Return)", float(ppo500["asterix"]), (0, 82), [0, 15, 30, 45, 60, 75], "right"),
+        ("asterix", "MinAtar Asterix\n(Mean Episode Return)", float(ppo500["asterix"]), (0, 96), [0, 20, 40, 60, 80], "right"),
     ]
 
     for ax, (game, title, ppo_val, xlim, xticks, tag_ha) in zip(axes, panels):
@@ -671,7 +694,7 @@ def generate_chart3(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     fig.text(
         0.55,
         0.935,
-        "11 Clean 3-Game LLM Runs Exceeding PPO-100M on WSB Median + PPO-500M & PPO-100M Baselines (ordered by WSB Median; n = 13)",
+        f"{n_llm} Clean 3-Game LLM Runs Exceeding PPO-100M on WSB Median + PPO-500M & PPO-100M Baselines (ordered by WSB Median; n = {n})",
         ha="center",
         va="top",
         fontsize=9.8,
@@ -680,7 +703,7 @@ def generate_chart3(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
 
     footer = (
         "Evaluated on 600-32-32-6 tanh policy networks over 1,000 MinAtar episodes. "
-        "Error bars show +/-1 SE where disclosed (1,000-episode SE for n=1 runs; run-to-run SE across n=3 networks for yzw-22; omitted if SE undisclosed)."
+        "Error bars show +/-1 SE where disclosed (1,000-episode SE for n=1 runs; run-to-run SE across n=3 networks for yzw-22 & shawnghu; omitted if SE undisclosed)."
     )
     fig.text(0.55, 0.025, footer, ha="center", va="bottom", fontsize=8.4, color=TEXT_FOOTER)
 

@@ -2,7 +2,7 @@
 # Copyright (c) 2026 opopile (comprehensive-weight-space-programming-leaderboard contributors)
 """Recompute dual-formula Weight-Space Programming MinAtar Experiment 5 leaderboards.
 
-Reads data/leaderboard_models.json, verifies all 39 model entries against
+Reads data/leaderboard_models.json, verifies all model entries against
 scripts/wsp_eval.py (WWI & WSB median formulas), regenerates
 data/leaderboard_wwi.csv (strictly main WWI rows) and
 data/leaderboard_wsb_median.csv (strictly main WSB median rows), and prints

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "generated_at": "2026-11-21T15:00:00Z",
-    "schema_version": "1.0.0",
+    "generated_at": "2026-11-21T18:15:00Z",
+    "schema_version": "1.1.0",
     "baselines": {
       "ppo500": {
         "breakout": 25.344,
@@ -1282,6 +1282,78 @@
       "wsb_published_median": null,
       "protocol_flag": "resumed_after_cap",
       "notes": "Auto-continuation fired once on Breakout and Seaquest after hitting 128k token cap (NOTES.md dev 24); separated from single-turn clean rankings."
+    },
+    {
+      "id": "claude_fable_5_2_high_shawnghu",
+      "model_name": "Claude Fable 5.2",
+      "source": "Shawn Hu (shawnghu)",
+      "source_url": "https://huggingface.co/datasets/shawnghu/fable-weight-space-programming",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "high",
+      "platform_api": "Anthropic API (128k cap)",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 484.5283,
+          "se": 14.2926,
+          "best": 502.682
+        },
+        "seaquest": {
+          "mean": 48.8923,
+          "se": 6.7466,
+          "best": 57.534
+        },
+        "asterix": {
+          "mean": 71.3117,
+          "se": 5.2014,
+          "best": 81.708
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 62.3367,
+      "computed_wsb_median": 129.4398,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Verbatim MIT CSAIL Exp 5 prompts, single-turn, no tools, system='Answer the user's request.', Anthropic API (claude-fable-5-2, adaptive thinking effort=high, 128k max output, 9/9 end_turn, 0 errors). Per-attempt means (1,000 episodes each): Breakout 456.329/502.682/494.574; Seaquest 53.546/35.597/57.534; Asterix 81.708/66.430/65.797. Cross-attempt SE reported."
+    },
+    {
+      "id": "claude_fable_5_2_xhigh_shawnghu",
+      "model_name": "Claude Fable 5.2",
+      "source": "Shawn Hu (shawnghu)",
+      "source_url": "https://huggingface.co/datasets/shawnghu/fable-weight-space-programming",
+      "tier": "full_3game_clean",
+      "include_in_main_wwi": true,
+      "include_in_main_wsb": true,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Anthropic API (128k cap)",
+      "attempts": "3/game",
+      "scores": {
+        "breakout": {
+          "mean": 0.55,
+          "se": null,
+          "best": 0.55
+        },
+        "seaquest": {
+          "mean": 22.104,
+          "se": null,
+          "best": 66.132
+        },
+        "asterix": {
+          "mean": 0.4843,
+          "se": null,
+          "best": 0.49
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 6.6223,
+      "computed_wsb_median": 0.0,
+      "wsb_published_median": null,
+      "protocol_flag": "clean",
+      "notes": "Verbatim MIT CSAIL Exp 5 prompts, Anthropic API (claude-fable-5-2, effort=xhigh, 128k max output). 8/9 runs hit max_tokens=128,000 (7/9 spent all 128k on thinking with no edits -> scored as all-zero random 0.55/0.09/0.49; asterix/r2 cut off mid-block -> 0.473). Sole completed run seaquest/r2 (end_turn at 124,576 tokens) achieved 66.132 +/- 1.454, the highest single-run verbatim LLM Seaquest score on record."
     }
   ],
   "partial_and_non_comparable": [

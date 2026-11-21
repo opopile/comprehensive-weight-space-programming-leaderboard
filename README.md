@@ -3,129 +3,91 @@
 # Comprehensive Weight-Space Programming Leaderboard (MinAtar Experiment 5)
 
 [![Dual License: MIT + CC BY 4.0](https://img.shields.io/badge/License-MIT%20(scripts)%20%2B%20CC%20BY%204.0%20(docs%2Fdata)-blue.svg)](LICENSE)
-[![Benchmark: MinAtar Exp 5](https://img.shields.io/badge/MinAtar-Experiment%205%20(600--32--32--6)-orange.svg)](#1-methodology--dual-formula-benchmark)
+[![Benchmark: MinAtar Exp 5](https://img.shields.io/badge/MinAtar-Experiment%205%20(600--32--32--6)-orange.svg)](#4-key-highlights--methodology)
 [![Privacy Scan: 0 Hits](https://img.shields.io/badge/Privacy%20Scan-0%20Hits-brightgreen.svg)](scripts/privacy_scan.py)
 
-A unified, reproducible consolidation of all publicly reported **Weight-Space Programming (WSP) MinAtar Experiment 5** evaluations across academic papers, community replications, and public benchmarks—combined with original local **Gemini 4 Neon (`xhigh`)** experimental artifacts (`634.48 ± 7.51` Breakout, `13.87 ± 0.55` Seaquest, `60.22 ± 1.04` Asterix; **WWI = `53.95`**, **WSB Median = `109.16`**).
-
-Every score in [`data/leaderboard_models.json`](data/leaderboard_models.json) is recomputed deterministically under **both** reference normalization formulas—Xingyu Dang's **Writing Weights Index (WWI)** and `eomcaleb/weight-space-bench`'s **PPO-500M Median Normalized Score (WSB Median)**—with strict data tiering and full separation of protocol deviations, resumed runs, and prompt-intervention ablations.
-
-### Key Highlights
-- **Unified Dual-Formula Consolidation (`39` records + `6` non-comparable suites)**: Integrates MIT CSAIL (`Takehi et al., Nov 2026`), Xingyu Dang's 14-bar Writing Weights Index (`@xingyudang`), `eomcaleb/weight-space-bench`, Alan Turing Institute (`arXiv:2611.21449`), 14 community Experiment 5 repositories, and local Gemini 4 Neon (`xhigh`) runs.
-- **Gemini 4 Neon (`xhigh`) Baseline**: Ranks **#5 on WWI (`53.9532`)** across all 30 verbatim-prompt entries and **#2 on WSB Median (`109.1622`)** among 20 clean 3-game entries—surpassing `PPO-500M` (`50.0` WWI / `100.0` WSB) and setting the highest recorded verbatim-prompt **Breakout** score (**`634.477 ± 7.514`**, `2,556.8%` of `PPO-500M`).
-- **Circuit-Level Mechanistic Verification**: Reconstructs every hidden neuron and weight tensor from `reply.md` -> `edits.json` -> `network.npz` with `0.0` float discrepancy, explaining how Gemini 4 Neon (`xhigh`) implements 20-state wall-clamp midpoint lookahead in Breakout, parity-chain decoding and sticky-action overshoot guarding in Asterix, and 2-cell thermometer + oxygen-gauge disambiguation in Seaquest.
-- **Dedicated Seaquest Prompt-Intervention Ablation** ([EN](docs/prompt-intervention-ablation.md) | [ZH](docs/prompt-intervention-ablation.zh-CN.md)): Appending a single sentence raises Seaquest return by **`+29.66%`** (`13.869 ± 0.552 -> 17.982 ± 0.743`, `z = 4.4426`, `p = 8.887e-6`), doubles nonzero weights (`550 -> 1,172`) with `0` identical nonzero coordinates (`cosine = -0.2059`), and is **strictly separated** from verbatim-prompt main rankings.
+A unified, reproducible consolidation of **`41`** publicly reported **Weight-Space Programming (WSP) MinAtar Experiment 5** evaluations across `22` upstream sources (MIT CSAIL, Shawn Hu's `Claude Fable 5.2`, Xingyu Dang, `eomcaleb/weight-space-bench`, Alan Turing Institute `arXiv:2611.21449`, and community replications) alongside original local **Gemini 4 Neon (`xhigh`)** experiments—deterministically recomputed under both **Writing Weights Index (WWI)** and **`weight-space-bench` PPO-500M Median** formulas. *(See also our standalone [Seaquest 1-Sentence Prompt-Intervention Ablation](docs/prompt-intervention-ablation.md), which boosts Seaquest by `+29.66%` and doubles nonzero weights `550 -> 1,172`.)*
 
 ---
 
-## 1. Methodology & Dual-Formula Benchmark
-
-### 1.1 MIT CSAIL Experiment 5 Protocol
-All clean leaderboard entries target the identical **MIT CSAIL Experiment 5** zero-shot weight-writing specification (`Takehi et al., Nov 2026`):
-- **Architecture**: `600 -> 32 -> 32 -> 6` fully-connected MLP (`W1: 600x32`, `b1: 32`, `W2: 32x32`, `b2: 32`, `W3: 32x6`, `b3: 6`; `20,486` total parameters) with **`tanh` hidden activations** and **softmax action sampling** over logits (`6` discrete actions; state channels flattened `(10, 10, 6)` -> `600` for unified interface).
-- **Environment & Seeds**: `MinAtar==1.0.15` (`Breakout`, `Seaquest`, `Asterix`) with `sticky_action_prob = 0.1`, `difficulty_ramping = True`, `max_steps = 10000`, evaluated across **`1,000` episodes (`seed = 0..999`)**.
-- **Output Format**: Zero-tool, single-turn text reply emitting an ```` ```edits ```` block of NumPy-style weight assignments applied to an all-zero initialized network.
-
-### 1.2 Canonical Reference Baselines (`data/leaderboard_models.json`)
-
-| Reference Baseline | Breakout | Seaquest | Asterix | WWI | WSB Median | Source & Definition |
-|---|---:|---:|---:|---:|---:|---|
-| **PPO-500M (best seed)** | `25.344` (`± 0.121`) | `88.884` (`± 1.562`) | `55.204` (`± 0.636`) | **`50.0000`** (`50.0`) | **`100.0000`** (`100.00`) | MIT CSAIL (`s0 / s2 / s1` best of 3 seeds) |
-| **PPO-100M (best seed)** | `15.779` (`± 0.093`) | `5.617` (`± 0.049`) | `25.820` (`± 0.447`) | **`25.1852`** (`25.2`) | **`46.2953`** (`46.30`) | MIT CSAIL (`s2 / s2 / s6` best of `10/3/10` seeds) |
-| **Uniform random (all-zero)** | `0.55` | `0.09` | `0.49` | **`0.0000`** (`0.0`) | **`0.0000`** (`0.00`) | All-zero network uniformly sampling 6 actions |
-
-### 1.3 Dual-Formula Definitions
-
-1. **Writing Weights Index (WWI)** (Xingyu Dang, Nov 2, 2026):
-   $$\text{WWI} = \frac{1}{3} \sum_{g \in \{\text{Breakout, Seaquest, Asterix}\}} 100 \cdot \frac{q_g}{1 + q_g}, \qquad q_g = \frac{\max(0,\; \text{score}_g - \text{random}_g)}{\text{PPO500M}_g - \text{random}_g}$$
-   - `Uniform random` gives $q_g = 0 \implies \text{WWI} = 0.0$; `PPO-500M` gives $q_g = 1 \implies \text{WWI} = 50.0$; scores exceeding `PPO-500M` saturate asymptotically toward `100.0`, preventing a single outlier game (such as Breakout `634.5`) from masking weak Seaquest performance.
-
-2. **`weight-space-bench` (WSB) PPO-500M Median Normalized Score** (`eomcaleb/weight-space-bench`, Nov 3, 2026):
-   $$\text{WSB Median} = 100 \times \operatorname{median}_{g \in \{\text{Breakout, Seaquest, Asterix}\}} \left(\frac{\text{score}_g - \text{random}_g}{\text{PPO500M}_g - \text{random}_g}\right)$$
-   - `Uniform random` = `0.00`; `PPO-100M` = `46.30` (`46.2953`); `PPO-500M` = `100.00`. Because it takes the unweighted median across the 3 games, it typically tracks the middle-performing game (Asterix for top LLMs).
-
-### 1.4 Strict Data-Tiering Policy
-1. **Tier 1 (`full_3game_clean`)**: Verbatim-prompt, single-turn, 600-32-32-6 runs with all 3 per-game means publicly disclosed. Both WWI and WSB Median are computed directly.
-2. **Tier 2 (`reported_wwi_only`)**: Entries from Xingyu Dang's chart without publicly released per-game raw scores. Included in the main WWI leaderboard marked `reported WWI`, and listed as `N/A (per-game scores not publicly disclosed)` in per-game columns and the WSB Median disclosure table.
-3. **Protocol Disclosure**: Any undisclosed thinking effort, API/platform channel, or attempt count is marked `Unspecified (per source)` without guessing.
-4. **Strict Separation**: Prompt-intervention ablations (`ablation_prompted`), auto-resumed runs after token truncation (`resumed_after_cap`), medians-only reporting (`medians_only`), and non-matching architectures/schedules (`partial_and_non_comparable`) are **excluded** from main rankings and documented separately in [Section 5](#5-protocol-separated--non-comparable-results).
-
----
-
-## 2. Writing Weights Index (WWI) Comprehensive Leaderboard
+## 1. Writing Weights Index (WWI) Comprehensive Leaderboard
 
 ![Writing Weights Index Comprehensive Leaderboard](charts/chart1_wwi_leaderboard.png)
 
-*Table 1 reproduces [`data/leaderboard_wwi.csv`](data/leaderboard_wwi.csv) (`include_in_main_wwi = True`: 30 verbatim-prompt LLM entries + 3 RL baselines = 33 main rows). Prompt-intervention ablation (`55.0657`) and protocol deviations are excluded and reported in [Section 5](#5-protocol-separated--non-comparable-results).*
+*Table 1 reproduces [`data/leaderboard_wwi.csv`](data/leaderboard_wwi.csv) (`include_in_main_wwi = True`: **32** verbatim-prompt LLM entries + **3** RL baselines = **35** main rows). Prompt-intervention ablation (`55.0657`) and protocol deviations are strictly isolated in [Section 5](#5-protocol-separated--non-comparable-results); formula definitions & baselines are in [Section 4](#4-key-highlights--methodology).*
 
 | Rank | Model | Source | WWI | Score Type | Breakout | Seaquest | Asterix | Thinking Effort | Platform / API | Attempts |
 |---:|---|---|---:|---|---:|---:|---:|---|---|---|
-| 1 | GPT-6 Astra | MIT CSAIL | 60.6221 *(60.7 reported)* | computed_wwi | 517.4110 | 53.1100 | 53.1780 | xhigh | Codex CLI | 1/game |
-| 2 | Gemini 4 Carbon | Xingyu Dang | 57.7000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 3 | GPT-6 Astra | Alan Turing Institute | 57.2207 | computed_wwi | 456.9000 | 25.5000 | 66.2000 | Unspecified (per source) | Codex / OpenAI API | 3-5/game |
-| 4 | GPT-6 Astra | yzw-22 | 56.9405 | computed_wwi | 470.8000 | 28.9000 | 58.2000 | xhigh | OpenAI via ofox relay | 3/game |
-| 5 | **Gemini 4 Neon (XHigh)** | **Antigravity (Local)** | **53.9532** | computed_wwi | **634.4770** | **13.8690** | **60.2170** | **xhigh** | **Antigravity (default ctx)** | **1/game** |
-| 6 | Claude Opus 5.5 | Xingyu Dang | 51.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 7 | GPT-6.1 Sol | weight-space-bench | 50.9667 | computed_wwi | 457.8930 | 11.8240 | 47.7980 | high | OpenRouter | 3/game |
+| 1 | **Claude Fable 5.2** | **Shawn Hu (shawnghu)** | **62.3367** | computed_wwi | **484.5283** | **48.8923** | **71.3117** | **high** | **Anthropic API (128k cap)** | **3/game** |
+| 2 | GPT-6 Astra | MIT CSAIL | 60.6221 *(60.7 reported)* | computed_wwi | 517.4110 | 53.1100 | 53.1780 | xhigh | Codex CLI | 1/game |
+| 3 | Gemini 4 Carbon | Xingyu Dang | 57.7000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 4 | GPT-6 Astra | Alan Turing Institute | 57.2207 | computed_wwi | 456.9000 | 25.5000 | 66.2000 | Unspecified (per source) | Codex / OpenAI API | 3-5/game |
+| 5 | GPT-6 Astra | yzw-22 | 56.9405 | computed_wwi | 470.8000 | 28.9000 | 58.2000 | xhigh | OpenAI via ofox relay | 3/game |
+| 6 | **Gemini 4 Neon (XHigh)** | **Antigravity (Local)** | **53.9532** | computed_wwi | **634.4770** | **13.8690** | **60.2170** | **xhigh** | **Antigravity (default ctx)** | **1/game** |
+| 7 | Claude Opus 5.5 | Xingyu Dang | 51.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 8 | GPT-6.1 Sol | weight-space-bench | 50.9667 | computed_wwi | 457.8930 | 11.8240 | 47.7980 | high | OpenRouter | 3/game |
 | Baseline | PPO-500M (best seed) | MIT CSAIL | 50.0000 *(50.0 reported)* | computed_wwi | 25.3440 | 88.8840 | 55.2040 | N/A (RL baseline) | N/A (RL baseline) | 3 seeds (best) |
-| 8 | Claude Opus 5.5 | dhaneshnm | 49.5935 | computed_wwi | 247.0667 | 22.2000 | 34.0000 | high | Anthropic API | 3/game |
-| 9 | GPT-6 Astra | openwsp | 46.3872 | computed_wwi | 458.7300 | 2.4070 | 39.7090 | xhigh | Codex CLI | 1/game |
-| 10 | Claude Opus 5.5 | Alan Turing Institute | 42.2385 | computed_wwi | 112.0000 | 0.0000 | 45.1000 | xhigh | Claude / Anthropic | 3/game |
-| 11 | Claude Fable 5.1 | Ludvik1kul | 37.9580 | computed_wwi | 76.4000 | 1.4000 | 32.7000 | Unspecified (per source) | Claude Code session (in-context) | 1/game |
-| 12 | Claude Fable 5.1 | Barneyjm | 37.1004 | computed_wwi | 61.3000 | 0.8000 | 36.2000 | xhigh (B/S), max (A) | Claude Code subagent | 1/game |
-| 13 | Gemini 4 Argon | Xingyu Dang | 36.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 14 | Kimi K3.1 Pro | Xingyu Dang | 29.8000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 15 | Claude Opus 5 | Alan Turing Institute | 26.7168 | computed_wwi | 30.9000 | 0.4000 | 18.5000 | high | Claude / Anthropic | 1/game |
-| 16 | GPT-5.6 Sol | Alan Turing Institute | 25.4983 | computed_wwi | 31.1000 | 0.8000 | 14.6000 | Unspecified (per source) | OpenAI | 3-5/game |
-| 17 | Claude Opus 5.5 | weight-space-bench | 25.4649 | computed_wwi | 17.5320 | 2.9070 | 27.0380 | high | OpenRouter | 3/game |
+| 9 | Claude Opus 5.5 | dhaneshnm | 49.5935 | computed_wwi | 247.0667 | 22.2000 | 34.0000 | high | Anthropic API | 3/game |
+| 10 | GPT-6 Astra | openwsp | 46.3872 | computed_wwi | 458.7300 | 2.4070 | 39.7090 | xhigh | Codex CLI | 1/game |
+| 11 | Claude Opus 5.5 | Alan Turing Institute | 42.2385 | computed_wwi | 112.0000 | 0.0000 | 45.1000 | xhigh | Claude / Anthropic | 3/game |
+| 12 | Claude Fable 5.1 | Ludvik1kul | 37.9580 | computed_wwi | 76.4000 | 1.4000 | 32.7000 | Unspecified (per source) | Claude Code session (in-context) | 1/game |
+| 13 | Claude Fable 5.1 | Barneyjm | 37.1004 | computed_wwi | 61.3000 | 0.8000 | 36.2000 | xhigh (B/S), max (A) | Claude Code subagent | 1/game |
+| 14 | Gemini 4 Argon | Xingyu Dang | 36.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 15 | Kimi K3.1 Pro | Xingyu Dang | 29.8000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 16 | Claude Opus 5 | Alan Turing Institute | 26.7168 | computed_wwi | 30.9000 | 0.4000 | 18.5000 | high | Claude / Anthropic | 1/game |
+| 17 | GPT-5.6 Sol | Alan Turing Institute | 25.4983 | computed_wwi | 31.1000 | 0.8000 | 14.6000 | Unspecified (per source) | OpenAI | 3-5/game |
+| 18 | Claude Opus 5.5 | weight-space-bench | 25.4649 | computed_wwi | 17.5320 | 2.9070 | 27.0380 | high | OpenRouter | 3/game |
 | Baseline | PPO-100M (best seed) | MIT CSAIL | 25.1852 *(25.2 reported)* | computed_wwi | 15.7790 | 5.6170 | 25.8200 | N/A (RL baseline) | N/A (RL baseline) | 10/3/10 seeds (best) |
-| 18 | DeepSeek V4.1-Flash | yzw-22 | 21.8937 | computed_wwi | 32.1000 | 0.3000 | 6.2000 | max | DeepSeek API | 3/game |
-| 19 | Claude Sonnet 5.5 | weight-space-bench | 13.1274 | computed_wwi | 6.5650 | 1.0300 | 13.1670 | high | OpenRouter | 3/game |
-| 20 | Qwen3.8 2.4T A95B | Xingyu Dang | 12.5000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 21 | Kimi K3.1 Pro | weight-space-bench | 11.4312 | computed_wwi | 6.8100 | 0.2920 | 9.3290 | high | OpenRouter | 3/game |
-| 22 | DeepSeek V4.1 Flash 1017 | Xingyu Dang | 10.0000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 23 | Muse Wonder | weight-space-bench | 8.2625 | computed_wwi | 7.4040 | 0.6440 | 1.8990 | high | OpenRouter | 3/game |
-| 24 | DeepSeek V4-Pro | yzw-22 | 7.6170 | computed_wwi | 7.0000 | 0.6000 | 1.4000 | max | DeepSeek API | 3/game |
-| 25 | GLM-5.5 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 26 | Claude Opus 4.5 | Alan Turing Institute | 3.6281 | computed_wwi | 3.4000 | 0.1000 | 0.8000 | Unspecified (per source) | Claude / Anthropic | 3-5/game |
-| 27 | Mistral Large 4 | Xingyu Dang | 2.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 28 | DeepSeek V4.1 Flash | weight-space-bench | 1.0636 | computed_wwi | 0.7300 | 0.1730 | 1.8220 | high | OpenRouter | 3/game |
-| 29 | MiniMax M3.1 Flash | Xingyu Dang | 0.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
-| 30 | Step 5 Preview | Xingyu Dang | 0.1000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 19 | DeepSeek V4.1-Flash | yzw-22 | 21.8937 | computed_wwi | 32.1000 | 0.3000 | 6.2000 | max | DeepSeek API | 3/game |
+| 20 | Claude Sonnet 5.5 | weight-space-bench | 13.1274 | computed_wwi | 6.5650 | 1.0300 | 13.1670 | high | OpenRouter | 3/game |
+| 21 | Qwen3.8 2.4T A95B | Xingyu Dang | 12.5000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 22 | Kimi K3.1 Pro | weight-space-bench | 11.4312 | computed_wwi | 6.8100 | 0.2920 | 9.3290 | high | OpenRouter | 3/game |
+| 23 | DeepSeek V4.1 Flash 1017 | Xingyu Dang | 10.0000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 24 | Muse Wonder | weight-space-bench | 8.2625 | computed_wwi | 7.4040 | 0.6440 | 1.8990 | high | OpenRouter | 3/game |
+| 25 | DeepSeek V4-Pro | yzw-22 | 7.6170 | computed_wwi | 7.0000 | 0.6000 | 1.4000 | max | DeepSeek API | 3/game |
+| 26 | Claude Fable 5.2 | Shawn Hu (shawnghu) | 6.6223 | computed_wwi | 0.5500 | 22.1040 | 0.4843 | xhigh | Anthropic API (128k cap) | 3/game |
+| 27 | GLM-5.5 | Xingyu Dang | 6.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 28 | Claude Opus 4.5 | Alan Turing Institute | 3.6281 | computed_wwi | 3.4000 | 0.1000 | 0.8000 | Unspecified (per source) | Claude / Anthropic | 3-5/game |
+| 29 | Mistral Large 4 | Xingyu Dang | 2.6000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 30 | DeepSeek V4.1 Flash | weight-space-bench | 1.0636 | computed_wwi | 0.7300 | 0.1730 | 1.8220 | high | OpenRouter | 3/game |
+| 31 | MiniMax M3.1 Flash | Xingyu Dang | 0.2000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
+| 32 | Step 5 Preview | Xingyu Dang | 0.1000 | reported WWI | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | N/A (per-game scores not publicly disclosed) | Unspecified (per source) | Unspecified (per source) | Unspecified (per source) |
 | Baseline | Uniform random (all-zero) | MIT CSAIL / WSB | 0.0000 *(0.0 reported)* | computed_wwi | 0.5500 | 0.0900 | 0.4900 | N/A (RL baseline) | N/A (RL baseline) | 1,000 episodes |
 
 ---
 
-## 3. `weight-space-bench` PPO-500M Median Normalized Leaderboard
+## 2. `weight-space-bench` PPO-500M Median Normalized Leaderboard
 
 ![weight-space-bench PPO-500M Median Normalized Leaderboard](charts/chart2_wsb_median_leaderboard.png)
 
-*Table 2 reproduces [`data/leaderboard_wsb_median.csv`](data/leaderboard_wsb_median.csv) (`include_in_main_wsb = True`: 20 clean verbatim 3-game LLM runs + 3 RL baselines = 23 main rows). The `WSB Pub` column records the exact published value in `weight-space-bench/leaderboard/leaderboard.csv`.*
+*Table 2 reproduces [`data/leaderboard_wsb_median.csv`](data/leaderboard_wsb_median.csv) (`include_in_main_wsb = True`: **22** clean verbatim 3-game LLM runs + **3** RL baselines = **25** main rows). The `WSB Pub` column records the exact published value in `weight-space-bench/leaderboard/leaderboard.csv`.*
 
 | Rank | Model | Source | WSB Median | WSB Pub | Breakout (% PPO-500M) | Seaquest (% PPO-500M) | Asterix (% PPO-500M) | Thinking Effort | Platform / API | Attempts |
 |---:|---|---|---:|---:|---:|---:|---:|---|---|---|
-| 1 | GPT-6 Astra | Alan Turing Institute | 120.0972 | — | 456.9000 (1840.57%) | 25.5000 (28.62%) | 66.2000 (120.10%) | Unspecified (per source) | Codex / OpenAI API | 3-5/game |
-| 2 | **Gemini 4 Neon (XHigh)** | **Antigravity (Local)** | **109.1622** | — | **634.4770 (2556.78%)** | **13.8690 (15.52%)** | **60.2170 (109.16%)** | **xhigh** | **Antigravity (default ctx)** | **1/game** |
-| 3 | GPT-6 Astra | yzw-22 | 105.4757 | — | 470.8000 (1896.63%) | 28.9000 (32.45%) | 58.2000 (105.48%) | xhigh | OpenAI via ofox relay | 3/game |
+| 1 | **Claude Fable 5.2** | **Shawn Hu (shawnghu)** | **129.4398** | — | **484.5283 (1952.00%)** | **48.8923 (54.96%)** | **71.3117 (129.44%)** | **high** | **Anthropic API (128k cap)** | **3/game** |
+| 2 | GPT-6 Astra | Alan Turing Institute | 120.0972 | — | 456.9000 (1840.57%) | 25.5000 (28.62%) | 66.2000 (120.10%) | Unspecified (per source) | Codex / OpenAI API | 3-5/game |
+| 3 | **Gemini 4 Neon (XHigh)** | **Antigravity (Local)** | **109.1622** | — | **634.4770 (2556.78%)** | **13.8690 (15.52%)** | **60.2170 (109.16%)** | **xhigh** | **Antigravity (default ctx)** | **1/game** |
+| 4 | GPT-6 Astra | yzw-22 | 105.4757 | — | 470.8000 (1896.63%) | 28.9000 (32.45%) | 58.2000 (105.48%) | xhigh | OpenAI via ofox relay | 3/game |
 | Baseline | PPO-500M (best seed) | MIT CSAIL | 100.0000 | 100.00 | 25.3440 (100.00%) | 88.8840 (100.00%) | 55.2040 (100.00%) | N/A (RL baseline) | N/A (RL baseline) | 3 seeds (best) |
-| 4 | GPT-6 Astra | MIT CSAIL | 96.2971 | 96.30 | 517.4110 (2084.62%) | 53.1100 (59.71%) | 53.1780 (96.30%) | xhigh | Codex CLI | 1/game |
-| 5 | GPT-6.1 Sol | weight-space-bench | 86.4642 | 86.46 | 457.8930 (1844.57%) | 11.8240 (13.21%) | 47.7980 (86.46%) | high | OpenRouter | 3/game |
-| 6 | Claude Opus 5.5 | Alan Turing Institute | 81.5331 | — | 112.0000 (449.50%) | 0.0000 (-0.10%) | 45.1000 (81.53%) | xhigh | Claude / Anthropic | 3/game |
-| 7 | GPT-6 Astra | openwsp | 71.6800 | — | 458.7300 (1847.95%) | 2.4070 (2.61%) | 39.7090 (71.68%) | xhigh | Codex CLI | 1/game |
-| 8 | Claude Fable 5.1 | Barneyjm | 65.2667 | — | 61.3000 (245.02%) | 0.8000 (0.80%) | 36.2000 (65.27%) | xhigh (B/S), max (A) | Claude Code subagent | 1/game |
-| 9 | Claude Opus 5.5 | dhaneshnm | 61.2458 | — | 247.0667 (994.26%) | 22.2000 (24.90%) | 34.0000 (61.25%) | high | Anthropic API | 3/game |
-| 10 | Claude Fable 5.1 | Ludvik1kul | 58.8698 | — | 76.4000 (305.92%) | 1.4000 (1.48%) | 32.7000 (58.87%) | Unspecified (per source) | Claude Code session (in-context) | 1/game |
-| 11 | Claude Opus 5.5 | weight-space-bench | 48.5214 | 48.52 | 17.5320 (68.49%) | 2.9070 (3.17%) | 27.0380 (48.52%) | high | OpenRouter | 3/game |
+| 5 | GPT-6 Astra | MIT CSAIL | 96.2971 | 96.30 | 517.4110 (2084.62%) | 53.1100 (59.71%) | 53.1780 (96.30%) | xhigh | Codex CLI | 1/game |
+| 6 | GPT-6.1 Sol | weight-space-bench | 86.4642 | 86.46 | 457.8930 (1844.57%) | 11.8240 (13.21%) | 47.7980 (86.46%) | high | OpenRouter | 3/game |
+| 7 | Claude Opus 5.5 | Alan Turing Institute | 81.5331 | — | 112.0000 (449.50%) | 0.0000 (-0.10%) | 45.1000 (81.53%) | xhigh | Claude / Anthropic | 3/game |
+| 8 | GPT-6 Astra | openwsp | 71.6800 | — | 458.7300 (1847.95%) | 2.4070 (2.61%) | 39.7090 (71.68%) | xhigh | Codex CLI | 1/game |
+| 9 | Claude Fable 5.1 | Barneyjm | 65.2667 | — | 61.3000 (245.02%) | 0.8000 (0.80%) | 36.2000 (65.27%) | xhigh (B/S), max (A) | Claude Code subagent | 1/game |
+| 10 | Claude Opus 5.5 | dhaneshnm | 61.2458 | — | 247.0667 (994.26%) | 22.2000 (24.90%) | 34.0000 (61.25%) | high | Anthropic API | 3/game |
+| 11 | Claude Fable 5.1 | Ludvik1kul | 58.8698 | — | 76.4000 (305.92%) | 1.4000 (1.48%) | 32.7000 (58.87%) | Unspecified (per source) | Claude Code session (in-context) | 1/game |
+| 12 | Claude Opus 5.5 | weight-space-bench | 48.5214 | 48.52 | 17.5320 (68.49%) | 2.9070 (3.17%) | 27.0380 (48.52%) | high | OpenRouter | 3/game |
 | Baseline | PPO-100M (best seed) | MIT CSAIL | 46.2953 | 46.30 | 15.7790 (61.42%) | 5.6170 (6.22%) | 25.8200 (46.30%) | N/A (RL baseline) | N/A (RL baseline) | 10/3/10 seeds (best) |
-| 12 | Claude Opus 5 | Alan Turing Institute | 32.9166 | — | 30.9000 (122.41%) | 0.4000 (0.35%) | 18.5000 (32.92%) | high | Claude / Anthropic | 1/game |
-| 13 | GPT-5.6 Sol | Alan Turing Institute | 25.7886 | — | 31.1000 (123.22%) | 0.8000 (0.80%) | 14.6000 (25.79%) | Unspecified (per source) | OpenAI | 3-5/game |
-| 14 | Claude Sonnet 5.5 | weight-space-bench | 23.1696 | 23.17 | 6.5650 (24.26%) | 1.0300 (1.06%) | 13.1670 (23.17%) | high | OpenRouter | 3/game |
-| 15 | Kimi K3.1 Pro | weight-space-bench | 16.1549 | 16.15 | 6.8100 (25.25%) | 0.2920 (0.23%) | 9.3290 (16.15%) | high | OpenRouter | 3/game |
-| 16 | DeepSeek V4.1-Flash | yzw-22 | 10.4361 | — | 32.1000 (127.25%) | 0.3000 (0.24%) | 6.2000 (10.44%) | max | DeepSeek API | 3/game |
-| 17 | Muse Wonder | weight-space-bench | 2.5752 | 2.57 | 7.4040 (27.64%) | 0.6440 (0.62%) | 1.8990 (2.58%) | high | OpenRouter | 3/game |
-| 18 | DeepSeek V4-Pro | yzw-22 | 1.6632 | — | 7.0000 (26.01%) | 0.6000 (0.57%) | 1.4000 (1.66%) | max | DeepSeek API | 3/game |
-| 19 | DeepSeek V4.1 Flash | weight-space-bench | 0.7260 | 0.75 | 0.7300 (0.73%) | 0.1730 (0.09%) | 1.8220 (2.43%) | high | OpenRouter | 3/game |
-| 20 | Claude Opus 4.5 | Alan Turing Institute | 0.5666 | — | 3.4000 (11.49%) | 0.1000 (0.01%) | 0.8000 (0.57%) | Unspecified (per source) | Claude / Anthropic | 3-5/game |
+| 13 | Claude Opus 5 | Alan Turing Institute | 32.9166 | — | 30.9000 (122.41%) | 0.4000 (0.35%) | 18.5000 (32.92%) | high | Claude / Anthropic | 1/game |
+| 14 | GPT-5.6 Sol | Alan Turing Institute | 25.7886 | — | 31.1000 (123.22%) | 0.8000 (0.80%) | 14.6000 (25.79%) | Unspecified (per source) | OpenAI | 3-5/game |
+| 15 | Claude Sonnet 5.5 | weight-space-bench | 23.1696 | 23.17 | 6.5650 (24.26%) | 1.0300 (1.06%) | 13.1670 (23.17%) | high | OpenRouter | 3/game |
+| 16 | Kimi K3.1 Pro | weight-space-bench | 16.1549 | 16.15 | 6.8100 (25.25%) | 0.2920 (0.23%) | 9.3290 (16.15%) | high | OpenRouter | 3/game |
+| 17 | DeepSeek V4.1-Flash | yzw-22 | 10.4361 | — | 32.1000 (127.25%) | 0.3000 (0.24%) | 6.2000 (10.44%) | max | DeepSeek API | 3/game |
+| 18 | Muse Wonder | weight-space-bench | 2.5752 | 2.57 | 7.4040 (27.64%) | 0.6440 (0.62%) | 1.8990 (2.58%) | high | OpenRouter | 3/game |
+| 19 | DeepSeek V4-Pro | yzw-22 | 1.6632 | — | 7.0000 (26.01%) | 0.6000 (0.57%) | 1.4000 (1.66%) | max | DeepSeek API | 3/game |
+| 20 | DeepSeek V4.1 Flash | weight-space-bench | 0.7260 | 0.75 | 0.7300 (0.73%) | 0.1730 (0.09%) | 1.8220 (2.43%) | high | OpenRouter | 3/game |
+| 21 | Claude Opus 4.5 | Alan Turing Institute | 0.5666 | — | 3.4000 (11.49%) | 0.1000 (0.01%) | 0.8000 (0.57%) | Unspecified (per source) | Claude / Anthropic | 3-5/game |
+| 22 | Claude Fable 5.2 | Shawn Hu (shawnghu) | 0.0000 | — | 0.5500 (0.00%) | 22.1040 (24.79%) | 0.4843 (-0.01%) | xhigh | Anthropic API (128k cap) | 3/game |
 | Baseline | Uniform random (all-zero) | MIT CSAIL / WSB | 0.0000 | 0.00 | 0.5500 (0.00%) | 0.0900 (0.00%) | 0.4900 (0.00%) | N/A (RL baseline) | N/A (RL baseline) | 1,000 episodes |
 
 ### Tier-2 Disclosure: Models Reporting WWI Only (Excluded from WSB Median)
@@ -146,14 +108,55 @@ The following 10 models appear in Xingyu Dang's Writing Weights Index (`reported
 
 ---
 
-## 4. Per-Game Score Analysis (Breakout, Seaquest, Asterix)
+## 3. Per-Game Score Analysis (Breakout, Seaquest, Asterix)
 
 ![Per-Game MinAtar Experiment 5 Comparison](charts/chart3_per_game_comparison.png)
 
-Across all 11 clean verbatim-prompt LLM runs exceeding `PPO-100M` on WSB Median, performance exhibits a stark three-way asymmetry:
-- **Breakout (Deterministic Ball Kinematics)**: Frontier models shatter `PPO-500M` (`25.344`) by more than an order of magnitude because brick-clearing dynamics and paddle reflection follow simple arithmetic rules. **Gemini 4 Neon (`xhigh`)** achieves **`634.477 ± 7.514`** (`2,556.8%` of `PPO-500M`, max episode `827.0`, mean length `8,235.7` steps), outperforming `GPT-6 Astra` (MIT `517.411`, `yzw-22` `470.800`, `openwsp` `458.730`, Turing `456.900`) and `GPT-6.1 Sol` (WSB `457.893`).
-- **Asterix (Center-Column Hazard Avoidance)**: Top models match or exceed `PPO-500M` (`55.204`): `GPT-6 Astra` (Turing `66.200`), **Gemini 4 Neon (`xhigh`)** (**`60.217 ± 1.039`**, max `333.0`, `109.2%` of `PPO-500M`), and `GPT-6 Astra` (`yzw-22` `58.200`).
-- **Seaquest (Multi-Objective Bottleneck)**: Every single-turn zero-shot LLM falls below `PPO-500M` (`88.884`) because Seaquest couples enemy projectiles, friendly bullets, oxygen depletion, diver capacity, and the overlaid `ch5` gauge. The MIT `GPT-6 Astra` reference reaches `53.110` (`59.7%` of `PPO-500M`), `yzw-22` reaches `28.900`, Turing reaches `25.500`, `dhaneshnm` Claude Opus 5.5 reaches `22.200`, and **Gemini 4 Neon (`xhigh`)** baseline scores **`13.869 ± 0.552`** (`15.5%` of `PPO-500M`, ahead of `GPT-6.1 Sol` WSB `11.824`).
+Across all **12** clean verbatim-prompt LLM runs exceeding `PPO-100M` on WSB Median, performance exhibits a stark three-way asymmetry:
+- **Breakout (Deterministic Ball Kinematics)**: Frontier models shatter `PPO-500M` (`25.344`) by more than an order of magnitude because brick-clearing dynamics and paddle reflection follow deterministic arithmetic rules. **Gemini 4 Neon (`xhigh`)** sets the highest recorded verbatim-prompt Breakout return at **`634.477 ± 7.514`** (`2,556.8%` of `PPO-500M`, max episode `827.0`, mean length `8,235.7` steps), ahead of `GPT-6 Astra` (MIT `517.411`, `yzw-22` `470.800`, `openwsp` `458.730`, Turing `456.900`), `Claude Fable 5.2` (`high`, `shawnghu` `484.528 ± 14.293`), and `GPT-6.1 Sol` (WSB `457.893`).
+- **Asterix (Center-Column Hazard Avoidance)**: Four clean runs surpass `PPO-500M` (`55.204`): **`Claude Fable 5.2` (`high`, `shawnghu`)** leads at **`71.312 ± 5.201`** (`129.4%` of `PPO-500M`, best single run `81.708`), followed by `GPT-6 Astra` (Turing `66.200`), **Gemini 4 Neon (`xhigh`)** (**`60.217 ± 1.039`**, max `333.0`, `109.2%`), and `GPT-6 Astra` (`yzw-22` `58.200`).
+- **Seaquest (Multi-Objective Bottleneck)**: Every single-turn zero-shot LLM falls below `PPO-500M` (`88.884`) because Seaquest couples enemy projectiles, friendly bullets, oxygen depletion, diver capacity, and the overlaid `ch5` gauge. The MIT `GPT-6 Astra` reference reaches `53.110` (`59.7%` of `PPO-500M`), **`Claude Fable 5.2` (`high`, `shawnghu`)** achieves **`48.892 ± 6.747`** across 3 attempts (and `Fable 5.2 xhigh`'s single non-truncated run `r2` hits **`66.132 ± 1.454`**), `yzw-22` reaches `28.900`, Turing reaches `25.500`, `dhaneshnm` Claude Opus 5.5 reaches `22.200`, and **Gemini 4 Neon (`xhigh`)** baseline scores **`13.869 ± 0.552`** (`15.5%` of `PPO-500M`, ahead of `GPT-6.1 Sol` WSB `11.824`).
+
+---
+
+## 4. Key Highlights & Methodology
+
+### Key Highlights
+- **Unified Dual-Formula Consolidation (`41` records + `6` non-comparable suites)**: Integrates MIT CSAIL (`Takehi et al., Nov 2026`), Shawn Hu's `Claude Fable 5.2` replication (`shawnghu`, `high` & `xhigh`), Xingyu Dang's 14-bar Writing Weights Index (`@xingyudang`), `eomcaleb/weight-space-bench`, Alan Turing Institute (`arXiv:2611.21449`), 14 community Experiment 5 repositories, and local Gemini 4 Neon (`xhigh`) runs.
+- **New Dual-Leaderboard #1 (`Claude Fable 5.2`, `high`) & Effort-Cap Paradox**: At `high` effort (`128k` output cap, `9/9 end_turn`), `Claude Fable 5.2` (`shawnghu`) achieves **#1 on WWI (`62.3367`)** and **#1 on WSB Median (`129.4398`)** (`484.53` Breakout / `48.89` Seaquest / `71.31` Asterix). Pushing the same model to `xhigh` causes `8/9` runs to exhaust the `128k` budget during thinking (averaging `6.62` WWI), even though the lone completed run (`seaquest/r2`) hits a record **`66.132`**.
+- **Gemini 4 Neon (`xhigh`) Baseline**: Ranks **#6 on WWI (`53.9532`)** across all 32 verbatim-prompt LLM entries and **#3 on WSB Median (`109.1622`)** among 22 clean 3-game entries—surpassing `PPO-500M` (`50.0` WWI / `100.0` WSB) and setting the **#1 all-time verbatim-prompt Breakout score (`634.477 ± 7.514`, `2,556.8%` of `PPO-500M`)**.
+- **Circuit-Level Mechanistic Verification**: Reconstructs every hidden neuron and weight tensor from `reply.md` -> `edits.json` -> `network.npz` with `0.0` float discrepancy, explaining how Gemini 4 Neon (`xhigh`) implements 20-state wall-clamp midpoint lookahead in Breakout, parity-chain decoding and sticky-action overshoot guarding in Asterix, and 2-cell thermometer + oxygen-gauge disambiguation in Seaquest.
+- **Dedicated Seaquest Prompt-Intervention Ablation** ([EN](docs/prompt-intervention-ablation.md) | [ZH](docs/prompt-intervention-ablation.zh-CN.md)): Appending a single sentence raises Seaquest return by **`+29.66%`** (`13.869 ± 0.552 -> 17.982 ± 0.743`, `z = 4.4426`, `p = 8.887e-6`), doubles nonzero weights (`550 -> 1,172`) with `0` identical nonzero coordinates (`cosine = -0.2059`), and is **strictly separated** from verbatim-prompt main rankings.
+
+### 4.1 MIT CSAIL Experiment 5 Protocol
+All clean leaderboard entries target the identical **MIT CSAIL Experiment 5** zero-shot weight-writing specification (`Takehi et al., Nov 2026`):
+- **Architecture**: `600 -> 32 -> 32 -> 6` fully-connected MLP (`W1: 600x32`, `b1: 32`, `W2: 32x32`, `b2: 32`, `W3: 32x6`, `b3: 6`; `20,486` total parameters) with **`tanh` hidden activations** and **softmax action sampling** over logits (`6` discrete actions; state channels flattened `(10, 10, 6)` -> `600` for unified interface).
+- **Environment & Seeds**: `MinAtar==1.0.15` (`Breakout`, `Seaquest`, `Asterix`) with `sticky_action_prob = 0.1`, `difficulty_ramping = True`, `max_steps = 10000`, evaluated across **`1,000` episodes (`seed = 0..999`)**.
+- **Output Format**: Zero-tool, single-turn text reply emitting an ```` ```edits ```` block of NumPy-style weight assignments applied to an all-zero initialized network.
+
+### 4.2 Canonical Reference Baselines (`data/leaderboard_models.json`)
+
+| Reference Baseline | Breakout | Seaquest | Asterix | WWI | WSB Median | Source & Definition |
+|---|---:|---:|---:|---:|---:|---|
+| **PPO-500M (best seed)** | `25.344` (`± 0.121`) | `88.884` (`± 1.562`) | `55.204` (`± 0.636`) | **`50.0000`** (`50.0`) | **`100.0000`** (`100.00`) | MIT CSAIL (`s0 / s2 / s1` best of 3 seeds) |
+| **PPO-100M (best seed)** | `15.779` (`± 0.093`) | `5.617` (`± 0.049`) | `25.820` (`± 0.447`) | **`25.1852`** (`25.2`) | **`46.2953`** (`46.30`) | MIT CSAIL (`s2 / s2 / s6` best of `10/3/10` seeds) |
+| **Uniform random (all-zero)** | `0.55` | `0.09` | `0.49` | **`0.0000`** (`0.0`) | **`0.0000`** (`0.00`) | All-zero network uniformly sampling 6 actions |
+
+### 4.3 Dual-Formula Definitions
+
+1. **Writing Weights Index (WWI)** (Xingyu Dang, Nov 2, 2026):
+   $$\text{WWI} = \frac{1}{3} \sum_{g \in \{\text{Breakout, Seaquest, Asterix}\}} 100 \cdot \frac{q_g}{1 + q_g}, \qquad q_g = \frac{\max(0,\; \text{score}_g - \text{random}_g)}{\text{PPO500M}_g - \text{random}_g}$$
+   - `Uniform random` gives $q_g = 0 \implies \text{WWI} = 0.0$; `PPO-500M` gives $q_g = 1 \implies \text{WWI} = 50.0$; scores exceeding `PPO-500M` saturate asymptotically toward `100.0`, preventing a single outlier game (such as Breakout `634.5`) from masking weak Seaquest performance.
+
+2. **`weight-space-bench` (WSB) PPO-500M Median Normalized Score** (`eomcaleb/weight-space-bench`, Nov 3, 2026):
+   $$\text{WSB Median} = 100 \times \operatorname{median}_{g \in \{\text{Breakout, Seaquest, Asterix}\}} \left(\frac{\text{score}_g - \text{random}_g}{\text{PPO500M}_g - \text{random}_g}\right)$$
+   - `Uniform random` = `0.00`; `PPO-100M` = `46.30` (`46.2953`); `PPO-500M` = `100.00`. Because it takes the unweighted median across the 3 games, it typically tracks the middle-performing game (Asterix for top LLMs).
+
+### 4.4 Strict Data-Tiering Policy
+1. **Tier 1 (`full_3game_clean`)**: Verbatim-prompt, single-turn, 600-32-32-6 runs with all 3 per-game means publicly disclosed. Both WWI and WSB Median are computed directly.
+2. **Tier 2 (`reported_wwi_only`)**: Entries from Xingyu Dang's chart without publicly released per-game raw scores. Included in the main WWI leaderboard marked `reported WWI`, and listed as `N/A (per-game scores not publicly disclosed)` in per-game columns and the WSB Median disclosure table.
+3. **Protocol Disclosure**: Any undisclosed thinking effort, API/platform channel, or attempt count is marked `Unspecified (per source)` without guessing.
+4. **Strict Separation**: Prompt-intervention ablations (`ablation_prompted`), auto-resumed runs after token truncation (`resumed_after_cap`), medians-only reporting (`medians_only`), and non-matching architectures/schedules (`partial_and_non_comparable`) are **excluded** from main rankings and documented separately in [Section 5](#5-protocol-separated--non-comparable-results).
 
 ---
 
@@ -227,6 +230,7 @@ Local Gemini 4 Neon (`xhigh`) runs were executed in **fresh Antigravity main cha
 Long weight-generation outputs frequently hit API token caps before emitting a complete ```` ```edits ```` block:
 - **`weight-space-bench` (`64k` cap, OpenRouter)**: `Claude Opus 5.5` (`high`) hit the `64k` limit on `2/9` attempts (scored `0.0`), depressing its WSB median to `48.52` (`WWI = 25.46`).
 - **Alan Turing Institute (`arXiv:2611.21449`)**: `Claude Opus 5.5` (`xhigh`) hit output caps on `2/3` Breakout and `3/3` Seaquest runs (`0.0` Seaquest, `WWI = 42.24`); `Claude Opus 5` at `xhigh` hit the cap on `10/12` attempts (requiring fallback to `high`).
+- **Shawn Hu (`shawnghu`, Anthropic API, `128k` cap) — The `high` vs `xhigh` Effort Paradox**: `Claude Fable 5.2` at `high` effort completed **`9/9`** runs cleanly (`end_turn`, `53k–114k` thinking tokens) to claim **#1 overall** (`62.34` WWI / `129.44` WSB). Raising effort to `xhigh` under the same `128k` ceiling pushed thinking past the budget on **`8/9`** runs (`7/9` spent all `128,000` tokens purely on thinking with zero emitted edits; `asterix/r2` cut off mid-block at `0.473`), collapsing its 3-attempt average to `6.62` WWI (`0.00` WSB)—even though the sole completed run (`seaquest/r2`, `124,576` tokens) hit an all-time verbatim LLM single-run Seaquest record of **`66.132 ± 1.454`**.
 - **Community Caps & Resumed Bias**: `Barneyjm` (`max` hit `64k` on B/S -> rerun at `xhigh`), `niqbal` (`2/3` Breakout hit `128k = 0`), and `dhaneshnm` (`1` earlier `64k` Seaquest call excluded; raised to `128k`) document the same ceiling. Conversely, `Claude Code` runs that triggered auto-continuation/resume (`MatinKhajavi`, `Sir-Olexander`, `Rekigan`) recover edits that would score `0` in single-turn API evaluation and are therefore strictly isolated in [Section 5.1](#51-separated-protocol-deviations--prompt-intervention-ablation-6-entries-excluded-from-main-rankings).
 
 ### 7.4 Random Baseline Decimal Precision (`GPT-6 Astra`: `60.62` vs `60.7`)
@@ -246,16 +250,16 @@ comprehensive-weight-space-programming-leaderboard/
 ├── README.md                                  # Primary English paper-style documentation
 ├── README.zh-CN.md                            # Full-parity Simplified Chinese documentation
 ├── LICENSE                                    # Dual-scope license (MIT for scripts + CC BY 4.0 for docs/data/artifacts)
-├── THIRD_PARTY.md                             # Complete 21-item upstream & GPL-3.0 dependency notices
+├── THIRD_PARTY.md                             # Complete 22-item upstream & GPL-3.0 dependency notices
 ├── requirements.txt                           # CPU-only dependencies (MinAtar==1.0.15 external GPL-3.0)
 ├── .gitignore
 ├── docs/
 │   ├── prompt-intervention-ablation.md        # Standalone Seaquest ablation page (EN)
 │   └── prompt-intervention-ablation.zh-CN.md  # Standalone Seaquest ablation page (ZH)
 ├── data/
-│   ├── leaderboard_models.json                # Master structured dataset (39 models + 6 non-comparable suites)
-│   ├── leaderboard_wwi.csv                    # Recomputed main WWI table (33 rows; 6 separated retained in JSON & §5.1)
-│   ├── leaderboard_wsb_median.csv             # Recomputed main WSB Median table (23 rows; 16 separated/undisclosed retained in JSON)
+│   ├── leaderboard_models.json                # Master structured dataset (41 models + 6 non-comparable suites)
+│   ├── leaderboard_wwi.csv                    # Recomputed main WWI table (35 rows; 6 separated retained in JSON & §5.1)
+│   ├── leaderboard_wsb_median.csv             # Recomputed main WSB Median table (25 rows; 16 separated/undisclosed retained in JSON)
 │   └── seaquest_ablation.json                 # Exact Seaquest baseline vs prompted ablation metrics
 ├── scripts/
 │   ├── wsp_eval.py                            # Edits parser, WWI & WSB Median formulas, MinAtar evaluator
@@ -355,6 +359,14 @@ If you use this consolidated dataset, dual-formula benchmark analysis, or Gemini
   howpublished = {\url{https://github.com/eomcaleb/weight-space-bench}}
 }
 
+@misc{hu2026fablewsp,
+  author       = {Hu, Shawn},
+  title        = {Claude Fable 5.2 can do `weight-space-programming' about as well as GPT-6 Astra},
+  year         = {2026},
+  month        = nov,
+  howpublished = {LessWrong \& Hugging Face Dataset, \url{https://huggingface.co/datasets/shawnghu/fable-weight-space-programming}}
+}
+
 @article{young2019minatar,
   author  = {Young, Kenny and Tian, Tian},
   title   = {MinAtar: An Atari-Inspired Testbed for Thorough and Reproducible Reinforcement Learning Experiments},
@@ -374,4 +386,4 @@ If you use this consolidated dataset, dual-formula benchmark analysis, or Gemini
 - **Third-Party Works & Unbundled Runtime Dependencies ([`THIRD_PARTY.md`](THIRD_PARTY.md))**:
   - Upstream MIT CSAIL logs (`RikiyaT/lm_understand-logs`) carry **CC BY 4.0** (logs/networks/prompts) and **MIT** (scripts), with upstream MinAtar source inside their prompt logs under **GPL-3.0** (not bundled here).
   - `MinAtar==1.0.15` (**GPL-3.0**) is declared in [`requirements.txt`](requirements.txt) strictly as an external, unbundled PyPI runtime dependency.
-  - Full attributions for all 21 upstream papers, benchmarks, and community replications are listed in [`THIRD_PARTY.md`](THIRD_PARTY.md).
+  - Full attributions for all 22 upstream papers, benchmarks, and community replications are listed in [`THIRD_PARTY.md`](THIRD_PARTY.md).
