@@ -1,4 +1,4 @@
-[简体中文 (README.zh-CN.md)](README.zh-CN.md) | [English (README.md)](README.md) | [Seaquest 提示词干预消融实验 (中文)](docs/prompt-intervention-ablation.zh-CN.md) | [Seaquest Prompt-Intervention Ablation (EN)](docs/prompt-intervention-ablation.md) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
+[简体中文 (README.zh-CN.md)](README.zh-CN.md) | [English (README.md)](README.md) | [🔥 中文提示词三杀 PPO-500M 专题](docs/chinese-prompt-ablation.zh-CN.md) | [Seaquest 单句消融 (中文)](docs/prompt-intervention-ablation.zh-CN.md) | [独立专题展示仓库](https://github.com/opopile/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
 
 # 综合权重空间编程排行榜（MinAtar Experiment 5）
 
@@ -6,7 +6,11 @@
 [![Benchmark: MinAtar Exp 5](https://img.shields.io/badge/MinAtar-Experiment%205%20(600--32--32--6)-orange.svg)](#4-核心亮点与方法论)
 [![Privacy Scan: 0 Hits](https://img.shields.io/badge/Privacy%20Scan-0%20Hits-brightgreen.svg)](scripts/privacy_scan.py)
 
-本仓库全面汇集了全网 `22` 个公开来源共 **`41`** 条 **权重空间编程（Weight-Space Programming, WSP）MinAtar Experiment 5** 评测记录（涵盖 MIT CSAIL、Shawn Hu 的 `Claude Fable 5.2`、Xingyu Dang、`eomcaleb/weight-space-bench`、Alan Turing Institute `arXiv:2611.21449` 及社区复现）与本地实测的 **Gemini 4 Neon（`xhigh`）** 产物，并按 **Writing Weights Index（WWI）** 与 **`weight-space-bench` PPO-500M 中位数**双公式确定性重算。*（另见独立专题页：[Seaquest 单句提示词干预消融实验](docs/prompt-intervention-ablation.zh-CN.md)，仅加一句话即令 Seaquest 暴涨 `+29.66%`、非零权重翻倍 `550 -> 1,172`。）*
+本仓库全面汇集了全网 `22` 个公开来源共 **`42`** 条 **权重空间编程（Weight-Space Programming, WSP）MinAtar Experiment 5** 评测记录（涵盖 MIT CSAIL、Shawn Hu 的 `Claude Fable 5.2`、Xingyu Dang、`eomcaleb/weight-space-bench`、Alan Turing Institute `arXiv:2611.21449` 及社区复现）与本地实测的 **Gemini 4 Neon（`xhigh`）** 产物，并按 **Writing Weights Index（WWI）** 与 **`weight-space-bench` PPO-500M 中位数**双公式确定性重算。
+
+> **🚀 震撼跨语言新发现（严格独立于英文原版主榜）：**  
+> 仅将原版提示词说明忠实直译为**简体中文**（0 工具、0 训练、单轮作答），**Gemini 4 Neon（`xhigh`）** 成为**全网公开记录中首个在全部 3 款 MinAtar 游戏上同时超越 5 亿步 PPO 的零样本权重网络**——**Breakout `537.44`（`2,165%`）**、**Seaquest `94.97`（`106.9%`，较英文基线暴涨 `+584.8%`！）**、**Asterix `84.91`（`154.3%`）**，**WWI 高达 `69.31`、WSB 中位数 `154.30`！**  
+> 👉 深度解析：**[中文提示词三杀 PPO-500M 专题（中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN）](docs/chinese-prompt-ablation.md)** · **[专属专题与全球复现仓库（`opopile/zero-shot-weights-beat-ppo-500m`）](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 单句消融页](docs/prompt-intervention-ablation.zh-CN.md)**
 
 ---
 
@@ -162,10 +166,11 @@
 
 ## 5. 协议隔离与不可直接对比结果
 
-### 5.1 协议偏离与提示词干预消融隔离表（`6` 条记录从主榜排除）
+### 5.1 协议偏离与提示词消融隔离表（`7` 条记录从主榜排除）
 
 | 模型 | 来源 | 分层 / 标记 | WWI | WSB 中位数 | Breakout | Seaquest | Asterix | 思考强度 / 平台 / 尝试次数 | 从主榜排除原因 |
 |---|---|---|---:|---:|---:|---:|---:|---|---|
+| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **忠实简体中文直译提示词复测；全网首个零样本 3/3 通杀 PPO-500M！详见独立专题页：[中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN](docs/chinese-prompt-ablation.md) 及 [独立专题仓库](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)。** |
 | GPT-6 Astra (Medians Only) | ZhangYiqun018 | `medians_only` | 58.5488 | 113.3768 | 487.7720 | 33.5250 | 62.5230 | xhigh / OpenAI-compatible API / 10-11/game | 报告多次运行的**中位数**（`n=11` B IQR `469.4..526.1`；`n=10` S IQR `18.0..37.7`，A IQR `48.8..65.8`）而非均值。 |
 | **Gemini 4 Neon (XHigh, Seaquest Prompted)** | **Antigravity (Local)** | **`ablation_prompted`** | **55.0657** | **109.1622** | **634.4770** | **17.9820** | **60.2170** | **xhigh / Antigravity (default ctx) / 1/game** | **Seaquest 追加单句提示词干预实验（`13.87 -> 17.98`，`+29.66%`）；详见独立消融页：[中文](docs/prompt-intervention-ablation.zh-CN.md) \| [EN](docs/prompt-intervention-ablation.md)。** |
 | Claude Opus 5.5 (Resumed) | MatinKhajavi | `resumed_after_cap` | 50.7958 | 85.0111 | 483.5860 | 11.4250 | 47.0030 | xhigh / Claude Code CLI 2.1.317 / 1/game | Breakout（`cut=0.509`）与 Seaquest（`cut=0.119`）触发 `128k` 上限后断点续写。 |
@@ -254,32 +259,34 @@ comprehensive-weight-space-programming-leaderboard/
 ├── requirements.txt                           # 纯 CPU 依赖（MinAtar==1.0.15 为外部 GPL-3.0 依赖）
 ├── .gitignore
 ├── docs/
+│   ├── chinese-prompt-ablation.md             # 中文提示词三杀 PPO-500M 独立专题页（英文）
+│   ├── chinese-prompt-ablation.zh-CN.md       # 中文提示词三杀 PPO-500M 独立专题页（简体中文）
 │   ├── prompt-intervention-ablation.md        # Seaquest 提示词干预消融独立页（英文）
 │   └── prompt-intervention-ablation.zh-CN.md  # Seaquest 提示词干预消融独立页（简体中文）
 ├── data/
-│   ├── leaderboard_models.json                # 主结构化数据集（41 条模型 + 6 项不可直接对比套件）
-│   ├── leaderboard_wwi.csv                    # 重算 WWI 主排行榜（35 行；6 条隔离条目保留于 JSON 与第 5.1 节）
-│   ├── leaderboard_wsb_median.csv             # 重算 WSB 中位数主排行榜（25 行；16 条隔离/未披露条目保留于 JSON）
-│   └── seaquest_ablation.json                 # Seaquest 基线与干预消融精确对比数据
+│   ├── leaderboard_models.json                # 主结构化数据集（42 条模型 + 6 项不可直接对比套件）
+│   ├── leaderboard_wwi.csv                    # 重算 WWI 主排行榜（35 行；7 条隔离条目保留于 JSON 与第 5.1 节）
+│   ├── leaderboard_wsb_median.csv             # 重算 WSB 中位数主排行榜（25 行；17 条隔离/未披露条目保留于 JSON）
+│   ├── seaquest_ablation.json                 # Seaquest 基线与干预消融精确对比数据
+│   └── chinese_ablation.json                  # 中英文三游戏跨语言消融精确对比数据
 ├── scripts/
 │   ├── wsp_eval.py                            # 编辑解析器、WWI 与 WSB 中位数公式、MinAtar 评测引擎
 │   ├── recompute_leaderboards.py              # 重算 CSV 排行榜并执行 Random 基线敏感性分析
 │   ├── verify_artifacts.py                    # 核验 reply.md -> network.npz（0.0 误差）、z 检验与 MinAtar 复现
-│   ├── generate_charts.py                     # 程序化生成 charts/chart1..4.png（300 DPI）
+│   ├── generate_charts.py                     # 程序化生成 charts/chart1..5.png（300 DPI）
 │   └── privacy_scan.py                        # 扫描全仓库路径、凭据与私有会话 UUID
 ├── charts/
 │   ├── chart1_wwi_leaderboard.png
 │   ├── chart2_wsb_median_leaderboard.png
 │   ├── chart3_per_game_comparison.png
-│   └── chart4（消融对比图，仅嵌入 docs/ 消融专题页）
+│   ├── chart4_seaquest_ablation.png           # 嵌入 docs/prompt-intervention-ablation*.md
+│   └── chart5_chinese_prompt_ablation.png     # 嵌入 docs/chinese-prompt-ablation*.md
 └── artifacts/
     └── gemini-4-neon-xhigh/
         ├── summary.json
-        ├── breakout/attempt_1/{edits.json,network.npz,reply.md,score.json}
-        ├── asterix/attempt_1/{edits.json,network.npz,reply.md,score.json}
-        └── seaquest/
-            ├── attempt_1/{edits.json,network.npz,reply.md,score.json}
-            └── attempt_2_prompted/{edits.json,network.npz,reply.md,score.json}
+        ├── breakout/{attempt_1,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
+        ├── asterix/{attempt_1,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
+        └── seaquest/{attempt_1,attempt_2_prompted,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
 ```
 
 ### 复现与校验命令

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "generated_at": "2026-11-21T18:15:00Z",
-    "schema_version": "1.1.0",
+    "generated_at": "2026-11-22T07:12:00Z",
+    "schema_version": "1.2.0",
     "baselines": {
       "ppo500": {
         "breakout": 25.344,
@@ -1354,6 +1354,42 @@
       "wsb_published_median": null,
       "protocol_flag": "clean",
       "notes": "Verbatim MIT CSAIL Exp 5 prompts, Anthropic API (claude-fable-5-2, effort=xhigh, 128k max output). 8/9 runs hit max_tokens=128,000 (7/9 spent all 128k on thinking with no edits -> scored as all-zero random 0.55/0.09/0.49; asterix/r2 cut off mid-block -> 0.473). Sole completed run seaquest/r2 (end_turn at 124,576 tokens) achieved 66.132 +/- 1.454, the highest single-run verbatim LLM Seaquest score on record."
+    },
+    {
+      "id": "gemini_4_neon_xhigh_local_zh_prompt",
+      "model_name": "Gemini 4 Neon (XHigh, Chinese Prompt)",
+      "source": "Antigravity (Local)",
+      "source_url": "https://github.com/opopile/zero-shot-weights-beat-ppo-500m",
+      "tier": "ablation_chinese_prompt",
+      "include_in_main_wwi": false,
+      "include_in_main_wsb": false,
+      "per_game_scores_disclosed": true,
+      "thinking_effort": "xhigh",
+      "platform_api": "Antigravity (default ctx)",
+      "attempts": "1/game",
+      "scores": {
+        "breakout": {
+          "mean": 537.436,
+          "se": 5.9780792346150236,
+          "best": 737.0
+        },
+        "seaquest": {
+          "mean": 94.968,
+          "se": 1.7106078320746563,
+          "best": 193.0
+        },
+        "asterix": {
+          "mean": 84.914,
+          "se": 1.541134549512047,
+          "best": 430.0
+        }
+      },
+      "reported_wwi": null,
+      "computed_wwi": 69.3061,
+      "computed_wsb_median": 154.3005,
+      "wsb_published_median": null,
+      "protocol_flag": "ablation_chinese_prompt",
+      "notes": "Faithful Simplified Chinese translation of MIT CSAIL Exp 5 prompt prose (Python source & edits DSL unchanged), single-turn, 0 tool calls, 0 errors. First single-shot zero-training LLM network on record to beat PPO-500M on ALL 3 MinAtar games simultaneously (Breakout 537.44, Seaquest 94.97, Asterix 84.91; WWI 69.31, WSB Median 154.30). Separated from verbatim-English main rankings; see docs/chinese-prompt-ablation.md and opopile/zero-shot-weights-beat-ppo-500m."
     }
   ],
   "partial_and_non_comparable": [

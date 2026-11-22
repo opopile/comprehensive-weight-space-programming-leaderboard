@@ -1,4 +1,4 @@
-[English (README.md)](README.md) | [简体中文 (README.zh-CN.md)](README.zh-CN.md) | [Seaquest Prompt-Intervention Ablation (EN)](docs/prompt-intervention-ablation.md) | [Seaquest 提示词干预消融实验 (中文)](docs/prompt-intervention-ablation.zh-CN.md) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
+[English (README.md)](README.md) | [简体中文 (README.zh-CN.md)](README.zh-CN.md) | [🔥 3/3 Sweep Over PPO-500M (ZH Prompt Ablation)](docs/chinese-prompt-ablation.md) | [Seaquest Prompt Ablation (EN)](docs/prompt-intervention-ablation.md) | [Dedicated Showcase Repo](https://github.com/opopile/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
 
 # Comprehensive Weight-Space Programming Leaderboard (MinAtar Experiment 5)
 
@@ -6,7 +6,11 @@
 [![Benchmark: MinAtar Exp 5](https://img.shields.io/badge/MinAtar-Experiment%205%20(600--32--32--6)-orange.svg)](#4-key-highlights--methodology)
 [![Privacy Scan: 0 Hits](https://img.shields.io/badge/Privacy%20Scan-0%20Hits-brightgreen.svg)](scripts/privacy_scan.py)
 
-A unified, reproducible consolidation of **`41`** publicly reported **Weight-Space Programming (WSP) MinAtar Experiment 5** evaluations across `22` upstream sources (MIT CSAIL, Shawn Hu's `Claude Fable 5.2`, Xingyu Dang, `eomcaleb/weight-space-bench`, Alan Turing Institute `arXiv:2611.21449`, and community replications) alongside original local **Gemini 4 Neon (`xhigh`)** experiments—deterministically recomputed under both **Writing Weights Index (WWI)** and **`weight-space-bench` PPO-500M Median** formulas. *(See also our standalone [Seaquest 1-Sentence Prompt-Intervention Ablation](docs/prompt-intervention-ablation.md), which boosts Seaquest by `+29.66%` and doubles nonzero weights `550 -> 1,172`.)*
+A unified, reproducible consolidation of **`42`** publicly reported **Weight-Space Programming (WSP) MinAtar Experiment 5** evaluations across `22` upstream sources (MIT CSAIL, Shawn Hu's `Claude Fable 5.2`, Xingyu Dang, `eomcaleb/weight-space-bench`, Alan Turing Institute `arXiv:2611.21449`, and community replications) alongside original local **Gemini 4 Neon (`xhigh`)** experiments—deterministically recomputed under both **Writing Weights Index (WWI)** and **`weight-space-bench` PPO-500M Median** formulas.
+
+> **🚀 BREAKTHROUGH CROSS-LINGUAL DISCOVERY (Strictly Separated from EN-Verbatim Main Rankings):**  
+> Prompted with a **faithful Simplified Chinese translation** (zero tools, zero training, 1 shot/game), **Gemini 4 Neon (`xhigh`)** became the **first single-shot LLM weight network on record to beat 500M-step PPO on ALL 3 MinAtar games simultaneously**—scoring **`537.44` Breakout (`2,165%`)**, **`94.97` Seaquest (`106.9%` — `+584.8%` jump!)**, and **`84.91` Asterix (`154.3%`)** for **`WWI = 69.31`** and **`WSB Median = 154.30`**!  
+> 👉 Read the full analysis: **[Chinese-Prompt Ablation (EN](docs/chinese-prompt-ablation.md) \| [ZH)](docs/chinese-prompt-ablation.zh-CN.md)** · **[Dedicated Showcase & Open Replication Repo (`opopile/zero-shot-weights-beat-ppo-500m`)](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 1-Sentence Ablation](docs/prompt-intervention-ablation.md)**
 
 ---
 
@@ -162,10 +166,11 @@ All clean leaderboard entries target the identical **MIT CSAIL Experiment 5** ze
 
 ## 5. Protocol-Separated & Non-Comparable Results
 
-### 5.1 Separated Protocol Deviations & Prompt-Intervention Ablation (`6` Entries Excluded from Main Rankings)
+### 5.1 Separated Protocol Deviations & Prompt Ablations (`7` Entries Excluded from Main Rankings)
 
 | Model | Source | Tier / Flag | WWI | WSB Median | Breakout | Seaquest | Asterix | Effort / Platform / Attempts | Reason Excluded from Main Rankings |
 |---|---|---|---:|---:|---:|---:|---:|---|---|
+| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **Faithful Simplified Chinese translation of Exp 5 prompt prose; first 3/3 zero-shot sweep over PPO-500M! See dedicated pages: [EN](docs/chinese-prompt-ablation.md) \| [ZH](docs/chinese-prompt-ablation.zh-CN.md) & [Showcase Repo](https://github.com/opopile/zero-shot-weights-beat-ppo-500m).** |
 | GPT-6 Astra (Medians Only) | ZhangYiqun018 | `medians_only` | 58.5488 | 113.3768 | 487.7720 | 33.5250 | 62.5230 | xhigh / OpenAI-compatible API / 10-11/game | Reports per-game **medians** (`n=11` B IQR `469.4..526.1`; `n=10` S IQR `18.0..37.7`, A IQR `48.8..65.8`) rather than means. |
 | **Gemini 4 Neon (XHigh, Seaquest Prompted)** | **Antigravity (Local)** | **`ablation_prompted`** | **55.0657** | **109.1622** | **634.4770** | **17.9820** | **60.2170** | **xhigh / Antigravity (default ctx) / 1/game** | **1-sentence prompt intervention on Seaquest (`13.87 -> 17.98`, `+29.66%`); see dedicated ablation pages: [EN](docs/prompt-intervention-ablation.md) \| [ZH](docs/prompt-intervention-ablation.zh-CN.md).** |
 | Claude Opus 5.5 (Resumed) | MatinKhajavi | `resumed_after_cap` | 50.7958 | 85.0111 | 483.5860 | 11.4250 | 47.0030 | xhigh / Claude Code CLI 2.1.317 / 1/game | Resumed after hitting `128k` output cap on Breakout (`cut=0.509`) and Seaquest (`cut=0.119`). |
@@ -254,32 +259,34 @@ comprehensive-weight-space-programming-leaderboard/
 ├── requirements.txt                           # CPU-only dependencies (MinAtar==1.0.15 external GPL-3.0)
 ├── .gitignore
 ├── docs/
+│   ├── chinese-prompt-ablation.md             # Standalone ZH-prompt 3/3 PPO-500M sweep page (EN)
+│   ├── chinese-prompt-ablation.zh-CN.md       # Standalone ZH-prompt 3/3 PPO-500M sweep page (ZH)
 │   ├── prompt-intervention-ablation.md        # Standalone Seaquest ablation page (EN)
 │   └── prompt-intervention-ablation.zh-CN.md  # Standalone Seaquest ablation page (ZH)
 ├── data/
-│   ├── leaderboard_models.json                # Master structured dataset (41 models + 6 non-comparable suites)
-│   ├── leaderboard_wwi.csv                    # Recomputed main WWI table (35 rows; 6 separated retained in JSON & §5.1)
-│   ├── leaderboard_wsb_median.csv             # Recomputed main WSB Median table (25 rows; 16 separated/undisclosed retained in JSON)
-│   └── seaquest_ablation.json                 # Exact Seaquest baseline vs prompted ablation metrics
+│   ├── leaderboard_models.json                # Master structured dataset (42 models + 6 non-comparable suites)
+│   ├── leaderboard_wwi.csv                    # Recomputed main WWI table (35 rows; 7 separated retained in JSON & §5.1)
+│   ├── leaderboard_wsb_median.csv             # Recomputed main WSB Median table (25 rows; 17 separated/undisclosed retained in JSON)
+│   ├── seaquest_ablation.json                 # Exact Seaquest baseline vs prompted ablation metrics
+│   └── chinese_ablation.json                  # Exact EN baseline vs ZH translation 3-game ablation metrics
 ├── scripts/
 │   ├── wsp_eval.py                            # Edits parser, WWI & WSB Median formulas, MinAtar evaluator
 │   ├── recompute_leaderboards.py              # Recomputes CSVs + Random baseline sensitivity audit
 │   ├── verify_artifacts.py                    # Verifies reply.md -> network.npz (0.0 diff), z-test, & MinAtar replay
-│   ├── generate_charts.py                     # Programmatically renders charts/chart1..4.png (300 DPI)
+│   ├── generate_charts.py                     # Programmatically renders charts/chart1..5.png (300 DPI)
 │   └── privacy_scan.py                        # Scans all repository files for paths, credentials, & UUIDs
 ├── charts/
 │   ├── chart1_wwi_leaderboard.png
 │   ├── chart2_wsb_median_leaderboard.png
 │   ├── chart3_per_game_comparison.png
-│   └── chart4 (ablation figure; embedded in docs/)
+│   ├── chart4_seaquest_ablation.png           # Embedded in docs/prompt-intervention-ablation*.md
+│   └── chart5_chinese_prompt_ablation.png     # Embedded in docs/chinese-prompt-ablation*.md
 └── artifacts/
     └── gemini-4-neon-xhigh/
         ├── summary.json
-        ├── breakout/attempt_1/{edits.json,network.npz,reply.md,score.json}
-        ├── asterix/attempt_1/{edits.json,network.npz,reply.md,score.json}
-        └── seaquest/
-            ├── attempt_1/{edits.json,network.npz,reply.md,score.json}
-            └── attempt_2_prompted/{edits.json,network.npz,reply.md,score.json}
+        ├── breakout/{attempt_1,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
+        ├── asterix/{attempt_1,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
+        └── seaquest/{attempt_1,attempt_2_prompted,attempt_zh_prompt}/{edits.json,network.npz,reply.md,score.json}
 ```
 
 ### Verification & Reproduction Commands

@@ -336,7 +336,7 @@ def generate_chart1(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
     footer = (
         f"Paper Baselines: PPO-500M ({p5['breakout']} / {p5['seaquest']} / {p5['asterix']}) & "
         f"Random ({rp['breakout']} / {rp['seaquest']} / {rp['asterix']}). "
-        f"Excluded from verbatim main rankings (n = {n_excl}): 4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation."
+        f"Excluded from verbatim main rankings (n = {n_excl}): 4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation, 1 Chinese-prompt ablation."
     )
     fig.text(0.50, 0.015, footer, ha="center", va="bottom", fontsize=8.3, color=TEXT_FOOTER)
 
@@ -509,7 +509,7 @@ def generate_chart2(models_payload: dict[str, Any], out_dir: Path, dpi: int = 30
 
     footer = (
         f"Excluded from WSB Median (n = {n_excl}): 10 reported_wwi_only entries (N/A: per-game scores not publicly disclosed) "
-        "+ 6 non-clean entries (4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation)."
+        "+ 7 separated entries (4 cap-resumed runs, 1 medians-only run, 1 Seaquest prompt-intervention ablation, 1 Chinese-prompt ablation)."
     )
     fig.text(0.52, 0.018, footer, ha="center", va="bottom", fontsize=8.3, color=TEXT_FOOTER)
 
@@ -1008,9 +1008,186 @@ def generate_chart4(
     )
 
 
+def generate_chart5(
+    models_payload: dict[str, Any],
+    zh_payload: dict[str, Any],
+    out_dir: Path,
+    dpi: int = 300,
+) -> Path:
+    """Chart 5: Full Chinese-Prompt Cross-Lingual Ablation (3/3 Games > PPO-500M)."""
+    by_id = {m["id"]: m for m in models_payload["models"]}
+    pg = zh_payload["per_game"]
+    agg = zh_payload["aggregate"]
+
+    fig, (ax1, ax2) = plt.subplots(
+        1,
+        2,
+        figsize=(16.8, 7.4),
+        gridspec_kw={"width_ratios": [1.15, 1.0], "wspace": 0.25, "left": 0.065, "right": 0.975, "top": 0.78, "bottom": 0.17},
+    )
+    fig.patch.set_facecolor("white")
+
+    # Panel A: Per-Game Mean Return (% of PPO-500M) for EN Baseline vs ZH Prompt vs Fable 5.2 vs MIT Astra
+    games = ["breakout", "asterix", "seaquest"]
+    game_labels = [
+        "Breakout\n(PPO-500M = 25.3)",
+        "Asterix\n(PPO-500M = 55.2)",
+        "Seaquest\n(PPO-500M = 88.9)",
+    ]
+    en_vals = [pg[g]["en_baseline"]["mean"] for g in games]
+    zh_vals = [pg[g]["zh_prompt"]["mean"] for g in games]
+    en_pcts = [pg[g]["en_baseline"]["pct_ppo500"] for g in games]
+    zh_pcts = [pg[g]["zh_prompt"]["pct_ppo500"] for g in games]
+
+    # Plot on log-scaled % of PPO-500M so Breakout (2165%) and Seaquest (107%) are both crystal clear
+    x = np.arange(len(games))
+    w = 0.34
+    b_en = ax1.bar(x - w / 2, en_pcts, width=w, color=COLOR_BASE_RUN, edgecolor=COLOR_BASE_RUN_EDGE, linewidth=1.1, label="Gemini 4 Neon (XHigh) - EN Verbatim Baseline", zorder=3)
+    b_zh = ax1.bar(x + w / 2, zh_pcts, width=w, color=COLOR_NEON, edgecolor=COLOR_NEON_EDGE, linewidth=1.3, label="Gemini 4 Neon (XHigh) - Faithful ZH Translation (3/3 > PPO-500M)", zorder=3)
+
+    ax1.axhline(100.0, color=COLOR_REF_PPO500, linestyle="--", linewidth=1.7, zorder=4)
+    ax1.text(1.50, 86.0, "PPO-500M = 100%", ha="center", va="top", fontsize=8.6, fontweight="bold", color=COLOR_REF_PPO500,
+             bbox=dict(facecolor="white", edgecolor="#FECACA", boxstyle="round,pad=0.22"), zorder=5)
+
+    ax1.set_yscale("log")
+    ax1.set_ylim(8, 6500)
+    ax1.set_yticks([10, 25, 50, 100, 250, 500, 1000, 2500])
+    ax1.set_yticklabels(["10%", "25%", "50%", "100%", "250%", "500%", "1000%", "2500%"])
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(game_labels, fontsize=9.6, fontweight="bold", color=TEXT_DARK)
+    ax1.set_ylabel("Performance (% of PPO-500M, Log Scale)", fontsize=10.0, fontweight="bold", color=TEXT_DARK)
+    ax1.set_title("A. Per-Game Return: First 3/3 Sweep Over PPO-500M", fontsize=11.4, fontweight="bold", color=TEXT_DARK, pad=12)
+    ax1.yaxis.grid(True, linestyle=":", color=GRID_COLOR, alpha=0.8, zorder=1)
+    ax1.set_axisbelow(True)
+    ax1.spines["top"].set_visible(False)
+    ax1.spines["right"].set_visible(False)
+
+    for i in range(len(games)):
+        ax1.text(
+            x[i] - w / 2,
+            en_pcts[i] * 1.13,
+            f"{en_vals[i]:.1f}\n({en_pcts[i]:.0f}%)",
+            ha="center",
+            va="bottom",
+            fontsize=8.2,
+            color=COLOR_BASE_RUN_EDGE,
+            fontweight="bold",
+            zorder=5,
+        )
+        ax1.text(
+            x[i] + w / 2,
+            zh_pcts[i] * 1.13,
+            f"{zh_vals[i]:.1f}\n({zh_pcts[i]:.0f}%)",
+            ha="center",
+            va="bottom",
+            fontsize=8.4,
+            color=COLOR_NEON_EDGE,
+            fontweight="bold",
+            zorder=5,
+        )
+    ax1.annotate(
+        "+584.8% jump!\n(13.9 -> 95.0)",
+        xy=(2 + w / 2 - 0.06, zh_pcts[2] * 1.80),
+        xytext=(1.70, 620),
+        ha="center",
+        fontsize=8.6,
+        fontweight="bold",
+        color=COLOR_NEON_EDGE,
+        arrowprops=dict(arrowstyle="->", color=COLOR_NEON_EDGE, lw=1.5),
+        bbox=dict(facecolor=COLOR_NEON_BAND, edgecolor=COLOR_NEON, boxstyle="round,pad=0.35"),
+        zorder=6,
+    )
+    ax1.legend(loc="upper right", fontsize=8.3, frameon=True, facecolor="#F8FAFC", edgecolor="#CBD5E1")
+
+    # Panel B: WWI Score Benchmark Comparison
+    fable_wwi = float(by_id["claude_fable_5_2_high_shawnghu"]["computed_wwi"])
+    astra_wwi = float(by_id["gpt_6_astra_mit"]["computed_wwi"])
+    carbon_wwi = float(by_id["gemini_4_carbon_dang"]["reported_wwi"])
+    ppo_wwi = float(by_id["ppo_500m_mit"]["computed_wwi"])
+
+    labels_b = [
+        "Gemini 4 Neon\n(XHigh, ZH Prompt)\nAntigravity | 1/game",
+        "Claude Fable 5.2\n(high, EN Verbatim)\nAnthropic API | 3/game",
+        "GPT-6 Astra\n(xhigh, EN Verbatim)\nMIT CSAIL | 1/game",
+        "Gemini 4 Carbon\n(reported WWI)\nXingyu Dang",
+        "Gemini 4 Neon\n(XHigh, EN Baseline)\nAntigravity | 1/game",
+        "PPO-500M\n(500M RL Steps)\nReference Baseline",
+    ]
+    vals_b = [agg["zh_prompt_wwi"], fable_wwi, astra_wwi, carbon_wwi, agg["en_baseline_wwi"], ppo_wwi]
+    cols_b = [COLOR_NEON, COLOR_CLEAN, COLOR_CLEAN, COLOR_REPORTED, COLOR_BASE_RUN, COLOR_BASELINE]
+    edges_b = [COLOR_NEON_EDGE, COLOR_CLEAN_EDGE, COLOR_CLEAN_EDGE, COLOR_REPORTED_EDGE, COLOR_BASE_RUN_EDGE, COLOR_BASELINE_EDGE]
+    hatches_b = [None, None, None, "///", None, ".."]
+
+    y_b = np.arange(len(labels_b))
+    for i in range(len(labels_b)):
+        ax2.barh(y_b[i], vals_b[i], height=0.62, color=cols_b[i], edgecolor=edges_b[i], linewidth=1.2 if i == 0 else 0.9, hatch=hatches_b[i], zorder=3)
+        tag = f"{vals_b[i]:.2f}  [+15.35 vs EN]" if i == 0 else f"{vals_b[i]:.2f}"
+        ax2.text(
+            vals_b[i] + 1.0,
+            y_b[i],
+            tag,
+            va="center",
+            ha="left",
+            fontsize=8.6,
+            fontweight="bold" if i in (0, 4) else "normal",
+            color=COLOR_NEON_EDGE if i == 0 else TEXT_DARK,
+            zorder=5,
+        )
+
+    ax2.axvline(50.0, color=COLOR_REF_PPO500, linestyle="--", linewidth=1.5, zorder=2)
+    ax2.text(50.0, -0.70, "PPO-500M = 50.0", ha="center", va="bottom", fontsize=8.2, fontweight="bold", color=COLOR_REF_PPO500,
+             bbox=dict(facecolor="white", edgecolor="none", pad=0.6), zorder=5)
+    ax2.set_yticks(y_b)
+    ax2.set_yticklabels(labels_b, fontsize=8.1, color=TEXT_DARK)
+    ax2.set_ylim(len(labels_b) - 0.35, -0.95)
+    ax2.set_xlim(0, 92)
+    ax2.set_xlabel("Writing Weights Index (WWI, 0-100 scale)", fontsize=10.0, fontweight="bold", color=TEXT_DARK)
+    ax2.set_title("B. Writing Weights Index vs Frontier Leaders", fontsize=11.4, fontweight="bold", color=TEXT_DARK, pad=12)
+    ax2.xaxis.grid(True, linestyle=":", color=GRID_COLOR, alpha=0.8, zorder=1)
+    ax2.set_axisbelow(True)
+    ax2.spines["top"].set_visible(False)
+    ax2.spines["right"].set_visible(False)
+
+    fig.text(
+        0.52,
+        0.96,
+        "Cross-Lingual Discovery: Faithful Chinese Prompt Achieves 3/3 Sweep Over PPO-500M",
+        ha="center",
+        va="top",
+        fontsize=14.4,
+        fontweight="bold",
+        color=TEXT_DARK,
+    )
+    fig.text(
+        0.52,
+        0.905,
+        (
+            "Gemini 4 Neon (XHigh) | Antigravity (default ctx) | 0 Tool Calls | 0 Training Steps | 1,000 MinAtar Episodes/Game (seed=0..999)\n"
+            "WWI: 53.95 -> 69.31 (+15.35) | WSB Median: 109.16 -> 154.30 (+45.14) | Total Nonzero Weights: 3,041 -> 4,192 | Separated from EN-Verbatim Main Rankings"
+        ),
+        ha="center",
+        va="top",
+        fontsize=8.9,
+        color=TEXT_MUTED,
+        linespacing=1.35,
+    )
+    footer = (
+        "Scientific caveat: n = 1 generated network per game for both EN baseline and ZH translation; "
+        "large gains (Seaquest 13.87 -> 94.97, z = 45.12) reflect both potential cross-lingual effects and high-variance topological search—independent n >= 3 replication welcomed!"
+    )
+    fig.text(0.52, 0.025, footer, ha="center", va="bottom", fontsize=8.2, color=TEXT_FOOTER)
+
+    return _save_figure(
+        fig,
+        out_dir / "chart5_chinese_prompt_ablation.png",
+        "Cross-Lingual Chinese Prompt Ablation: 3/3 Sweep Over PPO-500M",
+        dpi=dpi,
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     repo_root = Path(__file__).resolve().parent.parent
-    parser = argparse.ArgumentParser(description="Generate four publication-grade Weight-Space Programming charts.")
+    parser = argparse.ArgumentParser(description="Generate five publication-grade Weight-Space Programming charts.")
     parser.add_argument(
         "--models-json",
         type=Path,
@@ -1022,6 +1199,12 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         default=repo_root / "data" / "seaquest_ablation.json",
         help="Path to seaquest_ablation.json",
+    )
+    parser.add_argument(
+        "--zh-ablation-json",
+        type=Path,
+        default=repo_root / "data" / "chinese_ablation.json",
+        help="Path to chinese_ablation.json",
     )
     parser.add_argument(
         "--out-dir",
@@ -1037,12 +1220,14 @@ def main(argv: list[str] | None = None) -> int:
 
     models_payload = json.loads(args.models_json.read_text(encoding="utf-8"))
     ablation_payload = json.loads(args.ablation_json.read_text(encoding="utf-8"))
+    zh_payload = json.loads(args.zh_ablation_json.read_text(encoding="utf-8"))
 
     outputs = [
         generate_chart1(models_payload, args.out_dir, dpi=args.dpi),
         generate_chart2(models_payload, args.out_dir, dpi=args.dpi),
         generate_chart3(models_payload, args.out_dir, dpi=args.dpi),
         generate_chart4(models_payload, ablation_payload, args.out_dir, dpi=args.dpi),
+        generate_chart5(models_payload, zh_payload, args.out_dir, dpi=args.dpi),
     ]
     for path in outputs:
         print(f"Generated {path.name} ({path.stat().st_size:,} bytes)")

@@ -46,6 +46,9 @@ RUNS = [
     ("asterix", "asterix/attempt_1", 920),
     ("seaquest", "seaquest/attempt_1", 550),
     ("seaquest", "seaquest/attempt_2_prompted", 1172),
+    ("breakout", "breakout/attempt_zh_prompt", 2009),
+    ("asterix", "asterix/attempt_zh_prompt", 976),
+    ("seaquest", "seaquest/attempt_zh_prompt", 1207),
 ]
 
 
