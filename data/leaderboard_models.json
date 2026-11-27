@@ -1359,7 +1359,7 @@
       "id": "gemini_4_neon_xhigh_local_zh_prompt",
       "model_name": "Gemini 4 Neon (XHigh, Chinese Prompt)",
       "source": "Antigravity (Local)",
-      "source_url": "https://github.com/opopile/zero-shot-weights-beat-ppo-500m",
+      "source_url": "https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m",
       "tier": "ablation_chinese_prompt",
       "include_in_main_wwi": false,
       "include_in_main_wsb": false,
@@ -1389,7 +1389,7 @@
       "computed_wsb_median": 154.3005,
       "wsb_published_median": null,
       "protocol_flag": "ablation_chinese_prompt",
-      "notes": "Faithful Simplified Chinese translation of MIT CSAIL Exp 5 prompt prose (Python source & edits DSL unchanged), single-turn, 0 tool calls, 0 errors. First single-shot zero-training LLM network on record to beat PPO-500M on ALL 3 MinAtar games simultaneously (Breakout 537.44, Seaquest 94.97, Asterix 84.91; WWI 69.31, WSB Median 154.30). Separated from verbatim-English main rankings; see docs/chinese-prompt-ablation.md and opopile/zero-shot-weights-beat-ppo-500m."
+      "notes": "Faithful Simplified Chinese translation of MIT CSAIL Exp 5 prompt prose (Python source & edits DSL unchanged), single-turn, 0 tool calls, 0 errors. First single-shot zero-training LLM network on record to beat PPO-500M on ALL 3 MinAtar games simultaneously (Breakout 537.44, Seaquest 94.97, Asterix 84.91; WWI 69.31, WSB Median 154.30). Separated from verbatim-English main rankings; see docs/chinese-prompt-ablation.md and xuyao-zhang/zero-shot-weights-beat-ppo-500m."
     }
   ],
   "partial_and_non_comparable": [
