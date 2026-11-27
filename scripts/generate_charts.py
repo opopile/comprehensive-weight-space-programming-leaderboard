@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2026 opopile (comprehensive-weight-space-programming-leaderboard contributors)
+# Copyright (c) 2026 Xuyao Zhang (comprehensive-weight-space-programming-leaderboard contributors)
 """Generate four publication-grade English-annotated charts from the unified dataset.
 
 Reads data/leaderboard_models.json and data/seaquest_ablation.json and produces:
