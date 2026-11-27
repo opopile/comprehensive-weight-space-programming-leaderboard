@@ -7,7 +7,7 @@
   "episodes_per_eval": 1000,
   "seed_start": 0,
   "max_steps": 10000,
-  "dedicated_repo": "https://github.com/opopile/zero-shot-weights-beat-ppo-500m",
+  "dedicated_repo": "https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m",
   "prompt_protocol": "Faithful Simplified Chinese translation of the MIT CSAIL Experiment 5 prompt prose; embedded MinAtar 1.0.15 Python source code, tensor names, and edits DSL kept verbatim unchanged. Zero extra motivational or hint sentences added.",
   "aggregate": {
     "en_baseline_wwi": 53.9532,
