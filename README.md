@@ -1,4 +1,4 @@
-[English (README.md)](README.md) | [简体中文 (README.zh-CN.md)](README.zh-CN.md) | [🔥 3/3 Sweep Over PPO-500M (ZH Prompt Ablation)](docs/chinese-prompt-ablation.md) | [Seaquest Prompt Ablation (EN)](docs/prompt-intervention-ablation.md) | [Dedicated Showcase Repo](https://github.com/opopile/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
+[English (README.md)](README.md) | [简体中文 (README.zh-CN.md)](README.zh-CN.md) | [🔥 3/3 Sweep Over PPO-500M (ZH Prompt Ablation)](docs/chinese-prompt-ablation.md) | [Seaquest Prompt Ablation (EN)](docs/prompt-intervention-ablation.md) | [Dedicated Showcase Repo](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
 
 # Comprehensive Weight-Space Programming Leaderboard (MinAtar Experiment 5)
 
@@ -10,7 +10,7 @@ A unified, reproducible consolidation of **`42`** publicly reported **Weight-Spa
 
 > **🚀 BREAKTHROUGH CROSS-LINGUAL DISCOVERY (Strictly Separated from EN-Verbatim Main Rankings):**  
 > Prompted with a **faithful Simplified Chinese translation** (zero tools, zero training, 1 shot/game), **Gemini 4 Neon (`xhigh`)** became the **first single-shot LLM weight network on record to beat 500M-step PPO on ALL 3 MinAtar games simultaneously**—scoring **`537.44` Breakout (`2,165%`)**, **`94.97` Seaquest (`106.9%` — `+584.8%` jump!)**, and **`84.91` Asterix (`154.3%`)** for **`WWI = 69.31`** and **`WSB Median = 154.30`**!  
-> 👉 Read the full analysis: **[Chinese-Prompt Ablation (EN](docs/chinese-prompt-ablation.md) \| [ZH)](docs/chinese-prompt-ablation.zh-CN.md)** · **[Dedicated Showcase & Open Replication Repo (`opopile/zero-shot-weights-beat-ppo-500m`)](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 1-Sentence Ablation](docs/prompt-intervention-ablation.md)**
+> 👉 Read the full analysis: **[Chinese-Prompt Ablation (EN](docs/chinese-prompt-ablation.md) \| [ZH)](docs/chinese-prompt-ablation.zh-CN.md)** · **[Dedicated Showcase & Open Replication Repo (`xuyao-zhang/zero-shot-weights-beat-ppo-500m`)](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 1-Sentence Ablation](docs/prompt-intervention-ablation.md)**
 
 ---
 
@@ -170,7 +170,7 @@ All clean leaderboard entries target the identical **MIT CSAIL Experiment 5** ze
 
 | Model | Source | Tier / Flag | WWI | WSB Median | Breakout | Seaquest | Asterix | Effort / Platform / Attempts | Reason Excluded from Main Rankings |
 |---|---|---|---:|---:|---:|---:|---:|---|---|
-| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **Faithful Simplified Chinese translation of Exp 5 prompt prose; first 3/3 zero-shot sweep over PPO-500M! See dedicated pages: [EN](docs/chinese-prompt-ablation.md) \| [ZH](docs/chinese-prompt-ablation.zh-CN.md) & [Showcase Repo](https://github.com/opopile/zero-shot-weights-beat-ppo-500m).** |
+| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **Faithful Simplified Chinese translation of Exp 5 prompt prose; first 3/3 zero-shot sweep over PPO-500M! See dedicated pages: [EN](docs/chinese-prompt-ablation.md) \| [ZH](docs/chinese-prompt-ablation.zh-CN.md) & [Showcase Repo](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m).** |
 | GPT-6 Astra (Medians Only) | ZhangYiqun018 | `medians_only` | 58.5488 | 113.3768 | 487.7720 | 33.5250 | 62.5230 | xhigh / OpenAI-compatible API / 10-11/game | Reports per-game **medians** (`n=11` B IQR `469.4..526.1`; `n=10` S IQR `18.0..37.7`, A IQR `48.8..65.8`) rather than means. |
 | **Gemini 4 Neon (XHigh, Seaquest Prompted)** | **Antigravity (Local)** | **`ablation_prompted`** | **55.0657** | **109.1622** | **634.4770** | **17.9820** | **60.2170** | **xhigh / Antigravity (default ctx) / 1/game** | **1-sentence prompt intervention on Seaquest (`13.87 -> 17.98`, `+29.66%`); see dedicated ablation pages: [EN](docs/prompt-intervention-ablation.md) \| [ZH](docs/prompt-intervention-ablation.zh-CN.md).** |
 | Claude Opus 5.5 (Resumed) | MatinKhajavi | `resumed_after_cap` | 50.7958 | 85.0111 | 483.5860 | 11.4250 | 47.0030 | xhigh / Claude Code CLI 2.1.317 / 1/game | Resumed after hitting `128k` output cap on Breakout (`cut=0.509`) and Seaquest (`cut=0.119`). |
@@ -314,12 +314,12 @@ python scripts/privacy_scan.py                      # confirms 0 PII/credential 
 If you use this consolidated dataset, dual-formula benchmark analysis, or Gemini 4 Neon (`xhigh`) experimental artifacts, please cite this repository alongside the foundational works below:
 
 ```bibtex
-@misc{opopile2026comprehensivewsp,
-  author       = {opopile},
+@misc{xuyaozhang2026comprehensivewsp,
+  author       = {Xuyao Zhang},
   title        = {Comprehensive Weight-Space Programming Leaderboard: MinAtar Experiment 5 Dual-Formula Consolidation, Gemini 4 Neon (XHigh) Baseline, and Prompt-Intervention Ablation},
   year         = {2026},
   month        = nov,
-  howpublished = {\url{https://github.com/opopile/comprehensive-weight-space-programming-leaderboard}}
+  howpublished = {\url{https://github.com/xuyao-zhang/comprehensive-weight-space-programming-leaderboard}}
 }
 
 @misc{takehi2026sparks,
