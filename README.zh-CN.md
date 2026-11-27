@@ -1,4 +1,4 @@
-[简体中文 (README.zh-CN.md)](README.zh-CN.md) | [English (README.md)](README.md) | [🔥 中文提示词三杀 PPO-500M 专题](docs/chinese-prompt-ablation.zh-CN.md) | [Seaquest 单句消融 (中文)](docs/prompt-intervention-ablation.zh-CN.md) | [独立专题展示仓库](https://github.com/opopile/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
+[简体中文 (README.zh-CN.md)](README.zh-CN.md) | [English (README.md)](README.md) | [🔥 中文提示词三杀 PPO-500M 专题](docs/chinese-prompt-ablation.zh-CN.md) | [Seaquest 单句消融 (中文)](docs/prompt-intervention-ablation.zh-CN.md) | [独立专题展示仓库](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m) | [LICENSE](LICENSE) | [THIRD_PARTY.md](THIRD_PARTY.md)
 
 # 综合权重空间编程排行榜（MinAtar Experiment 5）
 
@@ -10,7 +10,7 @@
 
 > **🚀 震撼跨语言新发现（严格独立于英文原版主榜）：**  
 > 仅将原版提示词说明忠实直译为**简体中文**（0 工具、0 训练、单轮作答），**Gemini 4 Neon（`xhigh`）** 成为**全网公开记录中首个在全部 3 款 MinAtar 游戏上同时超越 5 亿步 PPO 的零样本权重网络**——**Breakout `537.44`（`2,165%`）**、**Seaquest `94.97`（`106.9%`，较英文基线暴涨 `+584.8%`！）**、**Asterix `84.91`（`154.3%`）**，**WWI 高达 `69.31`、WSB 中位数 `154.30`！**  
-> 👉 深度解析：**[中文提示词三杀 PPO-500M 专题（中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN）](docs/chinese-prompt-ablation.md)** · **[专属专题与全球复现仓库（`opopile/zero-shot-weights-beat-ppo-500m`）](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 单句消融页](docs/prompt-intervention-ablation.zh-CN.md)**
+> 👉 深度解析：**[中文提示词三杀 PPO-500M 专题（中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN）](docs/chinese-prompt-ablation.md)** · **[专属专题与全球复现仓库（`xuyao-zhang/zero-shot-weights-beat-ppo-500m`）](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)** · **[Seaquest 单句消融页](docs/prompt-intervention-ablation.zh-CN.md)**
 
 ---
 
@@ -170,7 +170,7 @@
 
 | 模型 | 来源 | 分层 / 标记 | WWI | WSB 中位数 | Breakout | Seaquest | Asterix | 思考强度 / 平台 / 尝试次数 | 从主榜排除原因 |
 |---|---|---|---:|---:|---:|---:|---:|---|---|
-| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **忠实简体中文直译提示词复测；全网首个零样本 3/3 通杀 PPO-500M！详见独立专题页：[中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN](docs/chinese-prompt-ablation.md) 及 [独立专题仓库](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)。** |
+| **Gemini 4 Neon (XHigh, Chinese Prompt)** | **Antigravity (Local)** | **`ablation_chinese_prompt`** | **69.3061** | **154.3005** | **537.4360** | **94.9680** | **84.9140** | **xhigh / Antigravity (default ctx) / 1/game** | **忠实简体中文直译提示词复测；全网首个零样本 3/3 通杀 PPO-500M！详见独立专题页：[中文](docs/chinese-prompt-ablation.zh-CN.md) \| [EN](docs/chinese-prompt-ablation.md) 及 [独立专题仓库](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)。** |
 | GPT-6 Astra (Medians Only) | ZhangYiqun018 | `medians_only` | 58.5488 | 113.3768 | 487.7720 | 33.5250 | 62.5230 | xhigh / OpenAI-compatible API / 10-11/game | 报告多次运行的**中位数**（`n=11` B IQR `469.4..526.1`；`n=10` S IQR `18.0..37.7`，A IQR `48.8..65.8`）而非均值。 |
 | **Gemini 4 Neon (XHigh, Seaquest Prompted)** | **Antigravity (Local)** | **`ablation_prompted`** | **55.0657** | **109.1622** | **634.4770** | **17.9820** | **60.2170** | **xhigh / Antigravity (default ctx) / 1/game** | **Seaquest 追加单句提示词干预实验（`13.87 -> 17.98`，`+29.66%`）；详见独立消融页：[中文](docs/prompt-intervention-ablation.zh-CN.md) \| [EN](docs/prompt-intervention-ablation.md)。** |
 | Claude Opus 5.5 (Resumed) | MatinKhajavi | `resumed_after_cap` | 50.7958 | 85.0111 | 483.5860 | 11.4250 | 47.0030 | xhigh / Claude Code CLI 2.1.317 / 1/game | Breakout（`cut=0.509`）与 Seaquest（`cut=0.119`）触发 `128k` 上限后断点续写。 |
@@ -314,12 +314,12 @@ python scripts/privacy_scan.py                      # 确认全仓库 0 隐私�
 如果您在研究或工程中使用了本仓库整合的数据集、双公式排行榜分析或 Gemini 4 Neon（`xhigh`）实验产物，请同时引用本仓库与以下奠基性工作：
 
 ```bibtex
-@misc{opopile2026comprehensivewsp,
-  author       = {opopile},
+@misc{xuyaozhang2026comprehensivewsp,
+  author       = {Xuyao Zhang},
   title        = {Comprehensive Weight-Space Programming Leaderboard: MinAtar Experiment 5 Dual-Formula Consolidation, Gemini 4 Neon (XHigh) Baseline, and Prompt-Intervention Ablation},
   year         = {2026},
   month        = nov,
-  howpublished = {\url{https://github.com/opopile/comprehensive-weight-space-programming-leaderboard}}
+  howpublished = {\url{https://github.com/xuyao-zhang/comprehensive-weight-space-programming-leaderboard}}
 }
 
 @misc{takehi2026sparks,
