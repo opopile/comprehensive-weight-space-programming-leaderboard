@@ -1,9 +1,9 @@
-[简体中文 (当前页)](chinese-prompt-ablation.zh-CN.md) | [English (chinese-prompt-ablation.md)](chinese-prompt-ablation.md) | [主排行榜 (中文)](../README.zh-CN.md) | [Main Leaderboard (EN)](../README.md) | [独立专题展示仓库 (`zero-shot-weights-beat-ppo-500m`)](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)
+[简体中文 (当前页)](chinese-prompt-ablation.zh-CN.md) | [English (chinese-prompt-ablation.md)](chinese-prompt-ablation.md) | [主排行榜 (中文)](../README.zh-CN.md) | [Main Leaderboard (EN)](../README.md) | [独立专题展示仓库 (`zero-shot-weights-beat-ppo-500m`)](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)
 
 # 跨语言震撼发现：全中文直译提示词首次实现零样本三杀 PPO-500M
 
 > **协议严格隔离说明**：由于本实验采用了 MIT CSAIL Experiment 5 提示词说明部分的**忠实简体中文直译**（而非原版英文字符串），为保持原版英文主榜口径的绝对纯净，本组结果**不混入 [`README.zh-CN.md`](../README.zh-CN.md) 原始英文主排行榜**，而是作为独立跨语言消融专题（`tier = "ablation_chinese_prompt"`）单列呈现。  
-> 更完整的专题展示、一键验证与**全球社区反复实验号召**，请访问我们的全新专属仓库：**[`opopile/zero-shot-weights-beat-ppo-500m`](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)**。
+> 更完整的专题展示、一键验证与**全球社区反复实验号召**，请访问我们的全新专属仓库：**[`xuyao-zhang/zero-shot-weights-beat-ppo-500m`](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)**。
 
 ![Cross-Lingual Discovery: Faithful Chinese Prompt Achieves 3/3 Sweep Over PPO-500M](../charts/chart5_chinese_prompt_ablation.png)
 
@@ -55,4 +55,4 @@
 1. **跨语言提示词效应**：将复杂规则忠实译为中文，可能改变了前沿大模型内部的推理路径与代码到权重的编译偏好；
 2. **权重空间的高方差拓扑采样**：在单轮生成中，模型一旦抽中全局更优的博弈几何不变式（如 `(x=7, 朝左)` 堡垒 vs `col 2 朝右`），零样本分数即可跨越一个数量级。
 
-**我们热忱欢迎全球开发者与研究者一起反复实验、独立验证！** 只需运行 `python scripts/verify_artifacts.py --workers 15` 即可 60 秒本地复验全部权重分数，更欢迎大家用中/英/日等多语种在 Neon、Carbon、Fable 5.2、GPT-6 Astra 上跑 `n >= 3` 或 `n >= 10` 独立复现，并前往专属仓库 **[`opopile/zero-shot-weights-beat-ppo-500m`](https://github.com/opopile/zero-shot-weights-beat-ppo-500m)** 提交 Issue 或 PR 共同探索权重空间编程的边界！
+**我们热忱欢迎全球开发者与研究者一起反复实验、独立验证！** 只需运行 `python scripts/verify_artifacts.py --workers 15` 即可 60 秒本地复验全部权重分数，更欢迎大家用中/英/日等多语种在 Neon、Carbon、Fable 5.2、GPT-6 Astra 上跑 `n >= 3` 或 `n >= 10` 独立复现，并前往专属仓库 **[`xuyao-zhang/zero-shot-weights-beat-ppo-500m`](https://github.com/xuyao-zhang/zero-shot-weights-beat-ppo-500m)** 提交 Issue 或 PR 共同探索权重空间编程的边界！
